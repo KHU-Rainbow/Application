@@ -31,7 +31,7 @@
         <activity android:name=".MainPage"/> <!--이부분 추가-->
         <activity android:name=".setting_time"/>
         <activity android:name=".date_study"/>
-
+    //1014 jina commmit test
     </application>
 
 
