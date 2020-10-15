@@ -1,4 +1,5 @@
-package com.example.rainbow_1012jina;
+package com.example.rainbow;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
