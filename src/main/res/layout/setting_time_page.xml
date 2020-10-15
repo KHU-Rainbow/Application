@@ -1,61 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:shrinkColumns="4"
-    android:stretchColumns="4">
-    <TableRow
+ >
+
+    <TimePicker
+        android:id="@+id/timePicker1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/hourInc"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:onClick="mOnClick"
-            android:text="+"/>
-        <TextView
-            android:id="@+id/hourNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="시간"/>
-        <Button
-            android:id="@+id/hourDec"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:onClick="mOnClick"
-            android:text="-"/>
-    </TableRow>
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
     <Button
-        android:id="@+id/minInc"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:onClick="mOnClick"
-        android:text="+"/>
-    <TextView
-        android:id="@+id/minNumber"
+        android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="분"/>
-    <Button
-        android:id="@+id/minDec"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:onClick="mOnClick"
-        android:text="-"/>
+        android:layout_below="@+id/timePicker1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:text="설정한 시간 보기" />
 
-    </TableRow>
-
-
-</TableLayout>
+</RelativeLayout>

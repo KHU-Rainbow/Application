@@ -9,22 +9,19 @@ import android.widget.Button;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 public class MainActivity extends AppCompatActivity {
-    Button settingbutton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button settingbutton = (Button) findViewById(R.id.go_setting);
-        settingbutton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), setting_time.class);
-                startActivity(intent);
-            }
-        });
     }
+
+    //이 버튼 누르면 setting time페이지로 이동함
+    public void go_to_setting_time(View view){
+        Intent intent = new Intent(this, setting_time.class);
+        startActivity(intent);
+    }
+
 }
 
 

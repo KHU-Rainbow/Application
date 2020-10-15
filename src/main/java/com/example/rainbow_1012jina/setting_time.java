@@ -1,51 +1,46 @@
 package com.example.rainbow_1012jina;
 import android.app.Activity;
+
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Calendar;
+
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+public class setting_time  extends Activity {
 
-import org.w3c.dom.Text;
-
-public class setting_time extends AppCompatActivity {
-
-    public int hNumber;
-    public int mNumber;
-
-    public TextView hTextNumber;
-    public TextView mTextNumber;
+    TimePicker timepicker;
+    int hour, minutes;
+    Button GetTime;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_time_page);
-        if(savedInstanceState!=null){
-            hNumber = savedInstanceState.getInt("hour",0);
-            mNumber = savedInstanceState.getInt("min",0);
-        }
-        hTextNumber = (TextView) findViewById(R.id.hourNumber);
-        hTextNumber.setText(hNumber+"");
 
-        mTextNumber = (TextView) findViewById(R.id.minNumber);
-        mTextNumber.setText(mNumber+"");
-    }
+        timepicker = (TimePicker)findViewById(R.id.timePicker1);
 
-    public void mOnClick(View v){
-        switch (v.getId()){
-            case R.id.hourInc:
-                hNumber++;
-                break;
-            case R.id.hourDec:
-                hNumber--;
-                break;
-            case R.id.minInc:
-                mNumber+=15;
-                break;
-            case R.id.minDec:
-                mNumber-=15;
-                break;
-        }
+        GetTime = (Button)findViewById(R.id.button1);
+
+        timepicker.setIs24HourView(true);
+
+        GetTime.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                hour = timepicker.getCurrentHour();
+                minutes = timepicker.getCurrentMinute();
+
+                Toast.makeText(setting_time.this,  hour + "시간 " + minutes+"분" ,Toast.LENGTH_LONG).show();
+
+            }
+        });
     }
 }
