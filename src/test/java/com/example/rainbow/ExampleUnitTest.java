@@ -1,4 +1,4 @@
-package com.example.rainbow_1012jina;
+package com.example.rainbow;
 
 import org.junit.Test;
 
