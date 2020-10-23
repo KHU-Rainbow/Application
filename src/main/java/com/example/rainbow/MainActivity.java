@@ -25,7 +25,7 @@ import static java.util.Calendar.*;
 public class MainActivity extends AppCompatActivity implements OnDateSelectedListener {
 
     private final OneDayDecorator oneDayDecorator = new OneDayDecorator();
-    private final Calendar calendar = getInstance();
+    private final Calendar calendar = Calendar.getInstance();
     MaterialCalendarView calendarView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         // 설정
         calendarView.state().edit()
                 // 주의 시작을 일요일
-                .setFirstDayOfWeek(SUNDAY)
+                .setFirstDayOfWeek(Calendar.SUNDAY)
                 // 캘린더의 범위 설정
                 .setMinimumDate(mon)
                 .setMaximumDate(CalendarDay.today())
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
             }
 
             //현재 캘린더 불러오기
-            Calendar calendar = getInstance();
+            Calendar calendar = Calendar.getInstance();
             //점을 찍을 day
             ArrayList<CalendarDay> dates = new ArrayList<>();
 
