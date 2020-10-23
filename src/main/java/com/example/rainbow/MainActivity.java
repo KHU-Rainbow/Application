@@ -20,10 +20,12 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.Executors;
 
+import static java.util.Calendar.*;
+
 public class MainActivity extends AppCompatActivity implements OnDateSelectedListener {
 
     private final OneDayDecorator oneDayDecorator = new OneDayDecorator();
-    private final Calendar calendar = Calendar.getInstance();
+    private final Calendar calendar = getInstance();
     MaterialCalendarView calendarView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +42,17 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         // 날짜 클릭 시, 함수 실행
         calendarView.setOnDateChangedListener(this);
 
+
+        Calendar mon = getInstance();
+        mon.add(MONTH, -1);
+        String beforeMonth = new java.text.SimpleDateFormat("yyyy-MM-dd").format(mon.getTime());
         // 설정
         calendarView.state().edit()
                 // 주의 시작을 일요일
-                .setFirstDayOfWeek(Calendar.SUNDAY)
+                .setFirstDayOfWeek(SUNDAY)
                 // 캘린더의 범위 설정
-                .setMinimumDate(CalendarDay.from(2020, 9, 1))
-                .setMaximumDate(CalendarDay.from(2021, 12, 31))
+                .setMinimumDate(mon)
+                .setMaximumDate(CalendarDay.today())
                 //Months로 볼 건지, Weeks로 볼 건지 결정
                 .setCalendarDisplayMode(CalendarMode.MONTHS)
                 .commit();
@@ -83,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
             }
 
             //현재 캘린더 불러오기
-            Calendar calendar = Calendar.getInstance();
+            Calendar calendar = getInstance();
             //점을 찍을 day
             ArrayList<CalendarDay> dates = new ArrayList<>();
 
