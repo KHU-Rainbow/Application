@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         // 설정
         calendarView.state().edit()
                 // 주의 시작을 일요일
-                .setFirstDayOfWeek(SUNDAY)
+                .setFirstDayOfWeek(Calendar.SUNDAY)
                 // 캘린더의 범위 설정
                 .setMinimumDate(mon)
                 .setMaximumDate(CalendarDay.today())
