@@ -208,9 +208,9 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         }
     }
 
-    public void onClick(View v){
-        Intent intent = new Intent(MainActivity.this,weekofRainbow.class);
+
+    public void weekofrainbow(View v){
+        Intent intent = new Intent(this, weekofRainbow.class);
         startActivity(intent);
     }
-
 }

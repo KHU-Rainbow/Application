@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:onClick="onClick"
+                android:onClick="weekofrainbow"
                 android:text="무지개 성적 보기" />
 
 
