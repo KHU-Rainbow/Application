@@ -31,6 +31,7 @@
 
         <activity android:name=".date_study"/>
         <activity android:name=".setting_time"/>
+        <activity android:name=".weekofRainbow"/>
     </application>
 
 </manifest>

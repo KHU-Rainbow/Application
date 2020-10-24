@@ -9,12 +9,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -25,12 +29,15 @@ import static java.util.Calendar.*;
 public class MainActivity extends AppCompatActivity implements OnDateSelectedListener {
 
     private final OneDayDecorator oneDayDecorator = new OneDayDecorator();
-    private final Calendar calendar = getInstance();
+    private final Calendar calendar = Calendar.getInstance();
     MaterialCalendarView calendarView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
         calendarView = (MaterialCalendarView) findViewById((R.id.calendarView));
 
         //날짜 한 개만 클릭 가능
@@ -45,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
         Calendar mon = getInstance();
         mon.add(MONTH, -1);
-        String beforeMonth = new java.text.SimpleDateFormat("yyyy-MM-dd").format(mon.getTime());
+        String beforeMonth = new SimpleDateFormat("yyyy-MM-dd").format(mon.getTime());
         // 설정
         calendarView.state().edit()
                 // 주의 시작을 일요일
@@ -89,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
             }
 
             //현재 캘린더 불러오기
-            Calendar calendar = getInstance();
+            Calendar calendar = Calendar.getInstance();
             //점을 찍을 day
             ArrayList<CalendarDay> dates = new ArrayList<>();
 
@@ -200,4 +207,10 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public void onClick(View v){
+        Intent intent = new Intent(MainActivity.this,weekofRainbow.class);
+        startActivity(intent);
+    }
+
 }
