@@ -27,8 +27,8 @@
             <ImageView
                 android:id="@+id/week_pic_1"
 
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:adjustViewBounds="true"/>
@@ -43,8 +43,8 @@
 
             <ImageView
                 android:id="@+id/week_pic_2"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:adjustViewBounds="true"/>
@@ -59,8 +59,8 @@
 
         <ImageView
             android:id="@+id/week_pic_3"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:adjustViewBounds="true"/>
@@ -75,14 +75,14 @@
 
             <ImageView
                 android:id="@+id/week_pic_4"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:adjustViewBounds="true"/>
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/week_5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
@@ -91,8 +91,8 @@
 
             <ImageView
                 android:id="@+id/week_pic_5"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:adjustViewBounds="true"/>
