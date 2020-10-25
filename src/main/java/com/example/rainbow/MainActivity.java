@@ -1,6 +1,7 @@
 package com.example.rainbow;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,7 +11,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -36,27 +36,25 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
+        // 달력 함수
         calendarView = (MaterialCalendarView) findViewById((R.id.calendarView));
-
-        //날짜 한 개만 클릭 가능
+        // 날짜 한 개만 클릭 가능
         calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_SINGLE);
-
+        // 날짜 클릭가능하게 세팅
         calendarView.setClickable(true);
         // 오늘 날짜 하이라이트표시
         calendarView.setSelectedDate(CalendarDay.today());
         // 날짜 클릭 시, 함수 실행
         calendarView.setOnDateChangedListener(this);
 
-
+        // 한달 전 날짜 구하기
         Calendar mon = getInstance();
         mon.add(MONTH, -1);
         String beforeMonth = new SimpleDateFormat("yyyy-MM-dd").format(mon.getTime());
-        // 설정
+        // 달력 기본 설정
         calendarView.state().edit()
                 // 주의 시작을 일요일
-                .setFirstDayOfWeek(Calendar.SUNDAY)
+                .setFirstDayOfWeek(SUNDAY)
                 // 캘린더의 범위 설정
                 .setMinimumDate(mon)
                 .setMaximumDate(CalendarDay.today())
@@ -70,15 +68,20 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
                 new SundayDecorator(),
                 oneDayDecorator);
 
-        //디비: dot 표시할 날짜 지정
+        // 디비: dot 표시할 날짜 지정(미완)
         String[] result = {"2020,09,18","2020,09,20","2020,10,2","2020,10,11"};
-
         new ApiSimulator(result).executeOnExecutor(Executors.newSingleThreadExecutor());
 
+        // 툴바 지정
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setLogo(R.drawable.logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
     }
 
-    private class ApiSimulator extends AsyncTask<Void, Void, List<CalendarDay>> {
+    // 닷 표시하는 함수
+   private class ApiSimulator extends AsyncTask<Void, Void, List<CalendarDay>> {
 
         String[] Time_Result;
 
@@ -165,26 +168,15 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     }
 
 
+    // 날짜 클릭 시 일자 화면으로 이동
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-        /* 날짜 클릭 시 Toast 띄우기
-        //selected is no value on logcat
-        Log.d("selected", "" + selected);
-        //It can't be show
-        Toast.makeText(this, "enterDateSelected" + date, Toast.LENGTH_SHORT).show();
 
-        if (selected == true) {
-            //It can't be show
-            Toast.makeText(this, "onClick" + date, Toast.LENGTH_SHORT).show();
-        }
-        */
         // 일자 페이지로 이동
         Intent intent = new Intent(this, date_study.class);
-
         // 날짜 넘기기
         String strday = date.toString();
         intent.putExtra("Date", strday);
-
         // 이동
         startActivity(intent);
     }
@@ -208,9 +200,10 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         }
     }
 
-
-    public void weekofrainbow(View v){
-        Intent intent = new Intent(this, weekofRainbow.class);
+    // 이 주의 무지개 보기 버튼 클릭시 페이지 이동
+    public void onClick(View v){
+        Intent intent = new Intent(MainActivity.this,weekofRainbow.class);
         startActivity(intent);
     }
+
 }

@@ -13,7 +13,10 @@ import android.widget.Button;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-public class setting_time  extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+public class setting_time  extends AppCompatActivity {
 
     TimePicker timepicker;
     int hour, minutes;
@@ -42,5 +45,10 @@ public class setting_time  extends Activity {
 
             }
         });
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setLogo(R.drawable.logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
     }
 }

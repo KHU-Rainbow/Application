@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 /* textView id : week_1, week_2...  ImageView id : week_pic_1, week_pic_2....
 무지개 : rb_pic7
 반무지개 : half_rb_pic4
@@ -13,7 +16,7 @@ import android.widget.TextView;
 기본값 : rb_pic8
 변수명 week_rbpic1,...
 */
-public class weekofRainbow extends Activity {
+public class weekofRainbow extends AppCompatActivity {
     private ImageView week_rbpic1, week_rbpic2, week_rbpic3, week_rbpic4, week_rbpic5;
     private TextView week1, week2, week3, week4, week5;
 
@@ -44,6 +47,12 @@ public class weekofRainbow extends Activity {
         week3.setTextColor(Color.parseColor("#3bba14"));
         week4.setTextColor(Color.parseColor("#1288cc"));
         week5.setTextColor(Color.parseColor("#a753f5"));
+
+        // 툴바 지정
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setLogo(R.drawable.logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
     }
 
