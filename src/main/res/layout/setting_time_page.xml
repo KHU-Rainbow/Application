@@ -29,7 +29,7 @@
         android:layout_below="@+id/timePicker1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
-        android:background="#88D5F8"
+        android:background="@drawable/rectangle"
         android:text="설정한 시간 보기" />
 
 </RelativeLayout>

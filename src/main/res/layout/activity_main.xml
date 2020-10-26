@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:backgroundTint="#88D5F8"
+                android:background="@drawable/rectangle"
                 android:onClick="onClick"
                 android:text="무지개 성적"
                 android:textStyle="bold" />

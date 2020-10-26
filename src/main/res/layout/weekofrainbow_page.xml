@@ -26,9 +26,9 @@
                 android:id="@+id/week_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
                 android:gravity="center"
-                android:text="첫째주" />
+                android:text="첫째주"
+                android:textSize="20sp" />
 
             <ImageView
                 android:id="@+id/week_pic_1"
