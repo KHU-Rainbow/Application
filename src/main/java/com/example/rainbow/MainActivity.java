@@ -13,6 +13,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 
+import com.example.rainbow.decorator.FridayDecorator;
+import com.example.rainbow.decorator.MondayDecorator;
+import com.example.rainbow.decorator.SundayDecorator;
+import com.example.rainbow.decorator.ThursdayDecorator;
+import com.example.rainbow.decorator.TuesdayDecorator;
+import com.example.rainbow.decorator.WednesdayDecorator;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -62,14 +68,8 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
                 .setCalendarDisplayMode(CalendarMode.MONTHS)
                 .commit();
 
-        // SundayDecorator는 일요일에 지정색
-        // oneDayDecorator는 오늘 날짜에 지정색
-        calendarView.addDecorators(
-                new SundayDecorator(),
-                oneDayDecorator);
-
         // 디비: dot 표시할 날짜 지정(미완)
-        String[] result = {"2020,09,18","2020,09,20","2020,10,2","2020,10,11"};
+        String[] result = {"2020,10,10","2020,10,11","2020,10,12","2020,10,13","2020,10,14","2020,10,15","2020,10,16"};
         new ApiSimulator(result).executeOnExecutor(Executors.newSingleThreadExecutor());
 
         // 툴바 지정
@@ -78,6 +78,19 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         getSupportActionBar().setLogo(R.drawable.logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
+
+        // SundayDecorator는 일요일에 지정색
+        // oneDayDecorator는 오늘 날짜에 지정색
+        // 닷은 모든 날짜에 빨주노초파남보로 있고, 목표를 달성하면 하나씩 없어지는 것으로 하였음!
+        calendarView.addDecorators(
+                new SundayDecorator(),
+                new MondayDecorator(),
+                new TuesdayDecorator(),
+                new WednesdayDecorator(),
+                new ThursdayDecorator(),
+                new FridayDecorator(),
+                new SundayDecorator(),
+                oneDayDecorator);
     }
 
     // 닷 표시하는 함수
@@ -119,51 +132,13 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
             return dates;
         }
-
         @Override
         protected void onPostExecute(@NonNull List<CalendarDay> calendarDays) {
             super.onPostExecute(calendarDays);
-
             if (isFinishing()) {
                 return;
             }
-
             calendarView.addDecorator(new EventDecorator(Color.RED, calendarDays));
-
-            /* 1안..... 무지개 닷 꼭 할거야.....
-            for(int i =0; i< calendarDays.size();i++) {
-                calendarView.addDecorator(new SundayDotDecorator(Color.RED, calendarDays.get(i)));
-                calendarView.addDecorator(new MondayDotDecorator(Color.RED, calendarDays.get(i)));
-                calendarView.addDecorator(new TuesdayDotDecorator(Color.YELLOW, calendarDays.get(i)));
-                calendarView.addDecorator(new WednesdayDotDecorator(Color.GREEN, calendarDays.get(i)));
-                calendarView.addDecorator(new ThursdayDotDecorator(Color.CYAN, calendarDays.get(i)));
-                calendarView.addDecorator(new FridayDotDecorator(Color.BLUE, calendarDays.get(i)));
-                calendarView.addDecorator(new SaturdayDotDecorator(Color.RED, calendarDays.get(i)));
-
-            }
-             */
-                /* 2안....
-            for(int i =0; i< calendarDays.size();i++){
-                int weekDay = calendar.get(Calendar.DAY_OF_WEEK);
-                if (weekDay == Calendar.SUNDAY) {
-                    calendarView.addDecorator(new EventDecorator(Color.RED, calendarDays.get(i)));
-                } else if (weekDay == Calendar.MONDAY) {
-                    // 주황색으로 바꿔야함
-                    calendarView.addDecorator(new EventDecorator(Color.RED, calendarDays.get(i)));
-                } else if (weekDay == Calendar.TUESDAY) {
-                    calendarView.addDecorator(new EventDecorator(Color.YELLOW, calendarDays.get(i)));
-                } else if (weekDay == Calendar.WEDNESDAY) {
-                    calendarView.addDecorator(new EventDecorator(Color.GREEN, calendarDays.get(i)));
-                } else if (weekDay == Calendar.THURSDAY) {
-                    calendarView.addDecorator(new EventDecorator(Color.CYAN, calendarDays.get(i)));
-                } else if (weekDay == Calendar.FRIDAY) {
-                    calendarView.addDecorator(new EventDecorator(Color.BLUE, calendarDays.get(i)));
-                } else {
-                    // 보라색으로 바꿔야
-                    calendarView.addDecorator(new EventDecorator(Color.RED, calendarDays.get(i)));
-                }
-
-            }*/
         }
     }
 
