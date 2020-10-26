@@ -1,4 +1,7 @@
-package com.example.rainbow.DotDecorator;
+package com.example.rainbow.decorator;
+
+import android.graphics.Color;
+import android.text.style.ForegroundColorSpan;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
@@ -7,25 +10,21 @@ import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 
 import java.util.Calendar;
 
-public class SaturdayDotDecorator implements DayViewDecorator {
+public class TuesdayDecorator implements DayViewDecorator {
     private final Calendar calendar = Calendar.getInstance();
 
-    private int color;
-    private CalendarDay dates;
-
-    public SaturdayDotDecorator(int color, CalendarDay date) {
-        this.color = color;
-        this.dates = dates;
+    public TuesdayDecorator() {
     }
 
     @Override
     public boolean shouldDecorate(CalendarDay day) {
+        day.copyTo(calendar);
         int weekDay = calendar.get(Calendar.DAY_OF_WEEK);
-        return weekDay == Calendar.SATURDAY;
+        return weekDay == Calendar.TUESDAY;
     }
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(new DotSpan(7, color)); // 날자밑에 점
+        view.addSpan(new DotSpan(5,Color.YELLOW));
     }
 }

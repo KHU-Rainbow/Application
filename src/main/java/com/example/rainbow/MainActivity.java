@@ -1,6 +1,7 @@
 package com.example.rainbow;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,12 +10,21 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
+import com.example.rainbow.decorator.FridayDecorator;
+import com.example.rainbow.decorator.MondayDecorator;
+import com.example.rainbow.decorator.SundayDecorator;
+import com.example.rainbow.decorator.ThursdayDecorator;
+import com.example.rainbow.decorator.TuesdayDecorator;
+import com.example.rainbow.decorator.WednesdayDecorator;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -31,25 +41,26 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 달력 함수
         calendarView = (MaterialCalendarView) findViewById((R.id.calendarView));
-
-        //날짜 한 개만 클릭 가능
+        // 날짜 한 개만 클릭 가능
         calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_SINGLE);
-
+        // 날짜 클릭가능하게 세팅
         calendarView.setClickable(true);
         // 오늘 날짜 하이라이트표시
         calendarView.setSelectedDate(CalendarDay.today());
         // 날짜 클릭 시, 함수 실행
         calendarView.setOnDateChangedListener(this);
 
-
+        // 한달 전 날짜 구하기
         Calendar mon = getInstance();
         mon.add(MONTH, -1);
-        String beforeMonth = new java.text.SimpleDateFormat("yyyy-MM-dd").format(mon.getTime());
-        // 설정
+        String beforeMonth = new SimpleDateFormat("yyyy-MM-dd").format(mon.getTime());
+        // 달력 기본 설정
         calendarView.state().edit()
                 // 주의 시작을 일요일
-                .setFirstDayOfWeek(Calendar.SUNDAY)
+                .setFirstDayOfWeek(SUNDAY)
                 // 캘린더의 범위 설정
                 .setMinimumDate(mon)
                 .setMaximumDate(CalendarDay.today())
@@ -57,21 +68,33 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
                 .setCalendarDisplayMode(CalendarMode.MONTHS)
                 .commit();
 
-        // SundayDecorator는 일요일에 지정색
-        // oneDayDecorator는 오늘 날짜에 지정색
-        calendarView.addDecorators(
-                new SundayDecorator(),
-                oneDayDecorator);
-
-        //디비: dot 표시할 날짜 지정
-        String[] result = {"2020,09,18","2020,09,20","2020,10,2","2020,10,11"};
-
+        // 디비: dot 표시할 날짜 지정(미완)
+        String[] result = {"2020,10,10","2020,10,11","2020,10,12","2020,10,13","2020,10,14","2020,10,15","2020,10,16"};
         new ApiSimulator(result).executeOnExecutor(Executors.newSingleThreadExecutor());
 
+        // 툴바 지정
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setLogo(R.drawable.logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
+
+        // SundayDecorator는 일요일에 지정색
+        // oneDayDecorator는 오늘 날짜에 지정색
+        // 닷은 모든 날짜에 빨주노초파남보로 있고, 목표를 달성하면 하나씩 없어지는 것으로 하였음!
+        calendarView.addDecorators(
+                new SundayDecorator(),
+                new MondayDecorator(),
+                new TuesdayDecorator(),
+                new WednesdayDecorator(),
+                new ThursdayDecorator(),
+                new FridayDecorator(),
+                new SundayDecorator(),
+                oneDayDecorator);
     }
 
-    private class ApiSimulator extends AsyncTask<Void, Void, List<CalendarDay>> {
+    // 닷 표시하는 함수
+   private class ApiSimulator extends AsyncTask<Void, Void, List<CalendarDay>> {
 
         String[] Time_Result;
 
@@ -109,75 +132,26 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
             return dates;
         }
-
         @Override
         protected void onPostExecute(@NonNull List<CalendarDay> calendarDays) {
             super.onPostExecute(calendarDays);
-
             if (isFinishing()) {
                 return;
             }
-
             calendarView.addDecorator(new EventDecorator(Color.RED, calendarDays));
-
-            /* 1안..... 무지개 닷 꼭 할거야.....
-            for(int i =0; i< calendarDays.size();i++) {
-                calendarView.addDecorator(new SundayDotDecorator(Color.RED, calendarDays.get(i)));
-                calendarView.addDecorator(new MondayDotDecorator(Color.RED, calendarDays.get(i)));
-                calendarView.addDecorator(new TuesdayDotDecorator(Color.YELLOW, calendarDays.get(i)));
-                calendarView.addDecorator(new WednesdayDotDecorator(Color.GREEN, calendarDays.get(i)));
-                calendarView.addDecorator(new ThursdayDotDecorator(Color.CYAN, calendarDays.get(i)));
-                calendarView.addDecorator(new FridayDotDecorator(Color.BLUE, calendarDays.get(i)));
-                calendarView.addDecorator(new SaturdayDotDecorator(Color.RED, calendarDays.get(i)));
-
-            }
-             */
-                /* 2안....
-            for(int i =0; i< calendarDays.size();i++){
-                int weekDay = calendar.get(Calendar.DAY_OF_WEEK);
-                if (weekDay == Calendar.SUNDAY) {
-                    calendarView.addDecorator(new EventDecorator(Color.RED, calendarDays.get(i)));
-                } else if (weekDay == Calendar.MONDAY) {
-                    // 주황색으로 바꿔야함
-                    calendarView.addDecorator(new EventDecorator(Color.RED, calendarDays.get(i)));
-                } else if (weekDay == Calendar.TUESDAY) {
-                    calendarView.addDecorator(new EventDecorator(Color.YELLOW, calendarDays.get(i)));
-                } else if (weekDay == Calendar.WEDNESDAY) {
-                    calendarView.addDecorator(new EventDecorator(Color.GREEN, calendarDays.get(i)));
-                } else if (weekDay == Calendar.THURSDAY) {
-                    calendarView.addDecorator(new EventDecorator(Color.CYAN, calendarDays.get(i)));
-                } else if (weekDay == Calendar.FRIDAY) {
-                    calendarView.addDecorator(new EventDecorator(Color.BLUE, calendarDays.get(i)));
-                } else {
-                    // 보라색으로 바꿔야
-                    calendarView.addDecorator(new EventDecorator(Color.RED, calendarDays.get(i)));
-                }
-
-            }*/
         }
     }
 
 
+    // 날짜 클릭 시 일자 화면으로 이동
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-        /* 날짜 클릭 시 Toast 띄우기
-        //selected is no value on logcat
-        Log.d("selected", "" + selected);
-        //It can't be show
-        Toast.makeText(this, "enterDateSelected" + date, Toast.LENGTH_SHORT).show();
 
-        if (selected == true) {
-            //It can't be show
-            Toast.makeText(this, "onClick" + date, Toast.LENGTH_SHORT).show();
-        }
-        */
         // 일자 페이지로 이동
         Intent intent = new Intent(this, date_study.class);
-
         // 날짜 넘기기
         String strday = date.toString();
         intent.putExtra("Date", strday);
-
         // 이동
         startActivity(intent);
     }
@@ -200,4 +174,11 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    // 이 주의 무지개 보기 버튼 클릭시 페이지 이동
+    public void onClick(View v){
+        Intent intent = new Intent(MainActivity.this,weekofRainbow.class);
+        startActivity(intent);
+    }
+
 }

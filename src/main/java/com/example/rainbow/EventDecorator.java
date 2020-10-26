@@ -1,9 +1,13 @@
 package com.example.rainbow;
 
+import android.graphics.Color;
+
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.spans.DotSpan;
+
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -12,9 +16,11 @@ import java.util.HashSet;
  */
 public class EventDecorator implements DayViewDecorator {
 
+    private final Calendar calendar = Calendar.getInstance();
     private int color;
     private HashSet<CalendarDay> dates;
 
+    public EventDecorator(){}
     public EventDecorator(int color, Collection<CalendarDay> dates) {
         this.color = color;
         this.dates = new HashSet<>(dates);
@@ -27,6 +33,7 @@ public class EventDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(new DotSpan(5, color));
+            view.addSpan(new dotspan_made(5, Color.WHITE));
+
     }
 }
