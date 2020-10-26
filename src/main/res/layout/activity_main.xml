@@ -40,10 +40,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/rectangle"
+                android:backgroundTint="#88D5F8"
                 android:onClick="onClick"
-                android:textStyle="bold"
-                android:text="무지개 성적" />
+                android:text="무지개 성적"
+                android:textStyle="bold" />
 
 
         </RelativeLayout>
