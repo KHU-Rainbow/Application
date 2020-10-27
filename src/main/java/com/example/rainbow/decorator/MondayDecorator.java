@@ -34,6 +34,6 @@ public class MondayDecorator implements DayViewDecorator {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(new DotSpan(10, Color.rgb(255,128,0)));
+        view.addSpan(new DotSpan(15, Color.rgb(255,128,0)));
     }
 }

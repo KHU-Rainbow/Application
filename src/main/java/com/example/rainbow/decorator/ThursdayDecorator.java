@@ -26,6 +26,6 @@ public class ThursdayDecorator implements DayViewDecorator {
     @Override
     public void decorate(DayViewFacade view) {
 
-        view.addSpan(new DotSpan(10,Color.rgb(0,0,120)));
+        view.addSpan(new DotSpan(15,Color.BLUE));
     }
 }
