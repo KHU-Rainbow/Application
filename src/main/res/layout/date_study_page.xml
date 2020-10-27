@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="Second Page"
         tools:layout_editor_absoluteX="229dp"
-        tools:layout_editor_absoluteY="331dp" />
+        tools:layout_editor_absoluteY="331dp"/>
 
     </LinearLayout>
 
