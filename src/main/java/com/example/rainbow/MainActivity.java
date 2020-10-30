@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     }
 
     // 닷 표시하는 함수
-   private class ApiSimulator extends AsyncTask<Void, Void, List<CalendarDay>> {
+    private class ApiSimulator extends AsyncTask<Void, Void, List<CalendarDay>> {
 
         String[] Time_Result;
 
