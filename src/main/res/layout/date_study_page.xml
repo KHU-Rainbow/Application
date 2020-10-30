@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"/>
 
         <TextView
+            android:layout_marginTop="10dp"
             android:id="@+id/today_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +31,10 @@
             android:gravity="center"
             android:background="@drawable/rectangle"
             android:textAlignment="center"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+
+        />
 
         <ImageView
             android:id="@+id/clock_icon"
@@ -40,7 +44,8 @@
             android:layout_weight="1"
             app:srcCompat="@drawable/clock"
             android:layout_below="@id/today_date"
-            android:layout_toLeftOf="@id/title_studytime"/>
+            android:layout_toLeftOf="@id/title_studytime"
+            android:layout_marginRight="20dp"/>
 
         <TextView
             android:id="@+id/title_studytime"
@@ -50,7 +55,8 @@
             android:text="총 공부 시간"
             android:textSize="18dp"
             android:layout_below="@id/today_date"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            />
         <TextView
             android:id="@+id/study_time"
             android:layout_width="match_parent"
@@ -58,6 +64,7 @@
             android:layout_below="@id/clock_icon"
             android:text="0시간 0분 / 5시간 30분"
             android:textSize="22dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/rectangle"
             android:textAlignment="center" />
 
@@ -66,7 +73,7 @@
             android:id="@+id/study_progressbar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="300dp"
-            android:layout_height="15dp"
+            android:layout_height="50dp"
             android:layout_below="@id/study_time"
             />
 
@@ -79,7 +86,8 @@
             android:layout_weight="1"
             android:layout_below="@id/study_progressbar"
             app:srcCompat="@drawable/phone"
-            android:layout_toLeftOf="@id/phone_num"/>
+            android:layout_toLeftOf="@id/phone_num"
+            android:layout_marginRight="20dp"/>
 
         <TextView
             android:id="@+id/phone_num"
@@ -99,6 +107,7 @@
             android:layout_height="wrap_content"
             android:text="0회"
             android:textSize="22dp"
+            android:layout_marginTop="20dp"
             android:layout_below="@id/phone_icon"
             android:background="@drawable/rectangle"
             android:textAlignment="center"/>
