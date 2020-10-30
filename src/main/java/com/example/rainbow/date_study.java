@@ -21,7 +21,7 @@ public class date_study extends AppCompatActivity {
 
         // 날짜 값 넘겨 받기
         Intent intent = getIntent();
-        TextView thedate = (TextView) findViewById(R.id.textView);
+        TextView thedate = (TextView) findViewById(R.id.today_date);
         String str_thedate= intent.getStringExtra("Date");
         if (str_thedate != null)
             thedate.setText(str_thedate);
