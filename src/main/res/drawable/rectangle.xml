@@ -12,4 +12,10 @@
         android:color="#88D5F8"
         android:textStyle="bold"/>
     <corners android:radius="20dp" />
+
+    <padding
+        android:bottom="15px"
+        android:top="15px"
+        android:left="30px"
+        android:right="30px"/>
 </shape>
