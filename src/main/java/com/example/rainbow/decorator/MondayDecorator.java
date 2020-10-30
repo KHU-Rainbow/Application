@@ -1,16 +1,11 @@
 package com.example.rainbow.decorator;
 
 import android.graphics.Color;
-<<<<<<< HEAD
 import android.os.Build;
 import android.text.style.ForegroundColorSpan;
 
 import androidx.annotation.RequiresApi;
 
-=======
-import android.text.style.ForegroundColorSpan;
-
->>>>>>> jina
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
@@ -36,15 +31,9 @@ public class MondayDecorator implements DayViewDecorator {
         return weekDay == Calendar.MONDAY;
     }
 
-<<<<<<< HEAD
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void decorate(DayViewFacade view) {
         view.addSpan(new DotSpan(15, Color.rgb(255,128,0)));
-=======
-    @Override
-    public void decorate(DayViewFacade view) {
-        view.addSpan(new DotSpan(5,Color.RED));
->>>>>>> jina
     }
 }

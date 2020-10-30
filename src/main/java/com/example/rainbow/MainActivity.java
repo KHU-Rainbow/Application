@@ -15,10 +15,7 @@ import android.view.View;
 
 import com.example.rainbow.decorator.FridayDecorator;
 import com.example.rainbow.decorator.MondayDecorator;
-<<<<<<< HEAD
 import com.example.rainbow.decorator.SaturdayDecorator;
-=======
->>>>>>> jina
 import com.example.rainbow.decorator.SundayDecorator;
 import com.example.rainbow.decorator.ThursdayDecorator;
 import com.example.rainbow.decorator.TuesdayDecorator;
@@ -73,11 +70,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
                 .commit();
 
         // 디비: dot 표시할 날짜 지정(미완)
-<<<<<<< HEAD
         String[] result = {"2020,10,4", "2020,10,5", "2020,10,10","2020,10,11","2020,10,12","2020,10,13","2020,10,14","2020,10,15","2020,10,16"};
-=======
-        String[] result = {"2020,10,10","2020,10,11","2020,10,12","2020,10,13","2020,10,14","2020,10,15","2020,10,16"};
->>>>>>> jina
         new ApiSimulator(result).executeOnExecutor(Executors.newSingleThreadExecutor());
 
         // 툴바 지정
@@ -97,10 +90,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
                 new WednesdayDecorator(),
                 new ThursdayDecorator(),
                 new FridayDecorator(),
-<<<<<<< HEAD
                 new SaturdayDecorator(),
-=======
->>>>>>> jina
                 new SundayDecorator(),
                 oneDayDecorator);
     }
