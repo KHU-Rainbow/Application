@@ -21,10 +21,12 @@ public class date_study extends AppCompatActivity {
 
         // 날짜 값 넘겨 받기
         Intent intent = getIntent();
-        TextView thedate = (TextView) findViewById(R.id.today_date);
-        String str_thedate= intent.getStringExtra("Date");
-        if (str_thedate != null)
-            thedate.setText(str_thedate);
+        TextView tx1 = (TextView)findViewById(R.id.today_date);
+        int year = intent.getExtras().getInt("Year");
+        int month = intent.getExtras().getInt("Month")+1;
+        int day = intent.getExtras().getInt("Day");
+        String date = Integer.toString(year)+"년 " + Integer.toString(month)+"월 " + Integer.toString(day) + "일";
+        tx1.setText(date);
     }
 
 }

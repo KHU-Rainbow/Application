@@ -152,8 +152,12 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         // 일자 페이지로 이동
         Intent intent = new Intent(this, date_study.class);
         // 날짜 넘기기
-        String strday = date.toString();
-        intent.putExtra("Date", strday);
+        int year = date.getYear();
+        int month = date.getMonth();
+        int day = date.getDay();
+        intent.putExtra("Year", year);
+        intent.putExtra("Month", month);
+        intent.putExtra("Day", day);
         // 이동
         startActivity(intent);
     }
