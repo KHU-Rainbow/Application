@@ -57,11 +57,11 @@ public class setting_time  extends AppCompatActivity {
 
                 Shader textShader = new LinearGradient(0, 0, width, goal_text .getTextSize(),
                         new int[]{
-                                Color.parseColor("#f53127"),
-                                Color.parseColor("#fc7d32"),
-                                Color.parseColor("#75e371"),
-                                Color.parseColor("#4ea0ed"),
-                                Color.parseColor("#c355f2"),
+                                Color.parseColor("#fa5050"),
+                                Color.parseColor("#faa850"),
+                                Color.parseColor("#66ed5f"),
+                                Color.parseColor("#60b4f0"),
+                                Color.parseColor("#c15df0"),
                         }, null, Shader.TileMode.CLAMP);
                 goal_text .getPaint().setShader(textShader);
 
