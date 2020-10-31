@@ -7,7 +7,11 @@ import java.text.NumberFormat;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,18 +33,12 @@ public class setting_time  extends AppCompatActivity {
         setContentView(R.layout.setting_time_page);
 
         timepicker = (TimePicker)findViewById(R.id.timePicker1);
-        //goal_text = (TextView)findViewById(R.id.goal_time);
+        goal_text = (TextView)findViewById(R.id.goal_time);
         GetTime = (Button)findViewById(R.id.button1);
 
         timepicker.setIs24HourView(true);
-        /*
-           <TextView
-        android:id="@+id/goal_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/timePicker1"
-        android:background="@drawable/rectangle"/>
-         */
+        goal_text  = (TextView) findViewById(R.id.goal_time);
+
 
         GetTime.setOnClickListener(new View.OnClickListener() {
 
@@ -51,12 +49,29 @@ public class setting_time  extends AppCompatActivity {
                 minutes = timepicker.getCurrentMinute();
 
                 TextView tx1 = (TextView)findViewById(R.id.goal_time);
-                Toast.makeText(setting_time.this,  hour + "시간 " + minutes+"분" ,Toast.LENGTH_LONG).show();
+                //Toast.makeText(setting_time.this,  hour + "시간 " + minutes+"분" ,Toast.LENGTH_LONG).show();
                 String t1= hour+"시간 "+minutes+"분";
                 tx1.setText(t1);
+                TextPaint paint = goal_text .getPaint();
+                float width = paint.measureText(t1);
+
+                Shader textShader = new LinearGradient(0, 0, width, goal_text .getTextSize(),
+                        new int[]{
+                                Color.parseColor("#f53127"),
+                                Color.parseColor("#fc7d32"),
+                                Color.parseColor("#75e371"),
+                                Color.parseColor("#4ea0ed"),
+                                Color.parseColor("#c355f2"),
+                        }, null, Shader.TileMode.CLAMP);
+                goal_text .getPaint().setShader(textShader);
 
             }
         });
+
+
+
+
+
         //goal_text.setText(setting_time.this, hour+"시간"+minutes+"분");
         //goal_text.setTextSize(30);
         Toolbar toolbar = findViewById(R.id.toolbar);
