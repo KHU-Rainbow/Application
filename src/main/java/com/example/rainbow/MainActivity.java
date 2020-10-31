@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         setSupportActionBar(toolbar);
         getSupportActionBar().setLogo(R.drawable.logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setTitle("  Rainbow");
 
 
         // SundayDecorator는 일요일에 지정색
