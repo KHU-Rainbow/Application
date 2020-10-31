@@ -50,7 +50,10 @@ public class setting_time  extends AppCompatActivity {
                 hour = timepicker.getCurrentHour();
                 minutes = timepicker.getCurrentMinute();
 
+                TextView tx1 = (TextView)findViewById(R.id.goal_time);
                 Toast.makeText(setting_time.this,  hour + "시간 " + minutes+"분" ,Toast.LENGTH_LONG).show();
+                String t1= hour+"시간 "+minutes+"분";
+                tx1.setText(t1);
 
             }
         });
