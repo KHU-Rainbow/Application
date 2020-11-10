@@ -20,7 +20,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase){
         //sqLiteDatabase.execSQL("CREATE TABLE STUDY (date String PRIMARY KEY, time int, goal int , achieve int);");
         //sqLiteDatabase.execSQL("CREATE TABLE DETECT (date String, time String, PRIMARY KEY (date, time));");
-        Log.i("[DataBaseHelper: onCreate]","테이블을 불러옵니다.");
+        //Log.i("[DataBaseHelper: onCreate]","테이블을 불러옵니다.");
     }
 
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1){
@@ -40,6 +40,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             result[i] = cursor.getString(0);
             i++;
         }
+        db.close();
         return result;
     }
 
@@ -53,6 +54,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         {
             result = cursor.getInt(0);
         }
+        db.close();
         return result;
     }
 
@@ -66,6 +68,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         {
             result = cursor.getInt(0);
         }
+        db.close();
         return result;
     }
 
@@ -105,11 +108,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = getReadableDatabase();
         String input = "SUN";
-        Cursor cursor_m = db.rawQuery("SELECT date FROM STUDY WHERE dayofweek = ?",new String[]{input});
-        cursor_m.moveToNext();
-        String firstSunday = cursor_m.getString(0);
-
-        Cursor cursor = db.rawQuery("SELECT achieve FROM STUDY WHERE  achieve IS NOT NULL and date >= ?", new String[]{firstSunday});
+        Cursor cursor = db.rawQuery("SELECT achieve FROM STUDY WHERE  achieve IS NOT NULL and date >= " +
+                "(SELECT date FROM STUDY WHERE dayofweek = ? LIMIT 1) ", new String[]{input});
 
         int count = cursor.getCount()/7;
         int[] result = new int[count];
@@ -131,6 +131,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 resultcount++;
             }
         }
+        db.close();
         return result;
 
     }
