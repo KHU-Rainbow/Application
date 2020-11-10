@@ -47,8 +47,14 @@ public class date_study extends AppCompatActivity {
         tx1.getPaint().setShader(textShader1);
 
         final DataBaseHelper DBHelper = new DataBaseHelper(this);
-        int studytime = DBHelper.getStudyTime(year+","+month+","+day);
-        int goaltime = DBHelper.getStudyGoal(year+","+month+","+day);
+        String month_s = Integer.toString(month);
+        if(month_s.length() == 1)
+            month_s = "0" + month;
+        String day_s = Integer.toString(day);
+        if(day_s.length() == 1)
+            day_s = "0" + day;
+        int studytime = DBHelper.getStudyTime(year+"-"+month_s+"-"+day_s);
+        int goaltime = DBHelper.getStudyGoal(year+"-"+month_s+"-"+day_s);
 
         int studyhours, studyminutes, goalhours, goalminutes;
         studyhours = studytime/60;
@@ -75,7 +81,7 @@ public class date_study extends AppCompatActivity {
 */
 
 
-        int numofdetect = DBHelper.getDetectNum(year+","+month+","+day);
+        int numofdetect = DBHelper.getDetectNum(year+"-"+month_s+"-"+day_s);
 
         TextView tx3 = (TextView)findViewById(R.id.phone_time);
         String detecttxt = numofdetect+"회";

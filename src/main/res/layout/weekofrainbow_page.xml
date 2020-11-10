@@ -27,7 +27,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="첫째주"
                 android:textSize="20sp" />
 
             <ImageView
@@ -44,8 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:gravity="center"
-                android:text="둘째주" />
+                android:gravity="center" />
 
             <ImageView
                 android:id="@+id/week_pic_2"
@@ -60,8 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:gravity="center"
-                android:text="셋째주" />
+                android:gravity="center" />
 
             <ImageView
                 android:id="@+id/week_pic_3"
@@ -76,8 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:gravity="center"
-                android:text="넷째주" />
+                android:gravity="center" />
 
             <ImageView
                 android:id="@+id/week_pic_4"
@@ -87,21 +83,6 @@
                 android:layout_marginTop="20dp"
                 android:adjustViewBounds="true"/>
 
-            <TextView
-                android:id="@+id/week_5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:text="다섯째주" />
-
-            <ImageView
-                android:id="@+id/week_pic_5"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:adjustViewBounds="true"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

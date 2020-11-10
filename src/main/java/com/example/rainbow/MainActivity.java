@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
         // 한달 전 날짜 구하기
         Calendar mon = getInstance();
-        mon.add(DATE, -30);
+        mon.add(DATE, -28);
         String beforeMonth = new SimpleDateFormat("yyyy-MM-dd").format(mon.getTime());
         // 달력 기본 설정
         calendarView.state().edit()
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
             //string 문자열인 Time_Result 을 받아와서 ,를 기준으로짜르고 string을 int 로 변환
             for(int i = 0 ; i < Time_Result.length ; i ++){
                 CalendarDay day = CalendarDay.from(calendar);
-                String[] time = Time_Result[i].split(",");
+                String[] time = Time_Result[i].split("-");
                 int year = Integer.parseInt(time[0]);
                 int month = Integer.parseInt(time[1]);
                 int dayy = Integer.parseInt(time[2]);

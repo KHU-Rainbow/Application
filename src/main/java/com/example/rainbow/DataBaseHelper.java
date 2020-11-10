@@ -100,4 +100,38 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE STUDY SET goal = '" + time + "' WHERE achieve is NULL;");
         db.close();
     }
+
+    public int[] getWeekAchieve()
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        String input = "SUN";
+        Cursor cursor_m = db.rawQuery("SELECT date FROM STUDY WHERE dayofweek = ?",new String[]{input});
+        cursor_m.moveToNext();
+        String firstSunday = cursor_m.getString(0);
+
+        Cursor cursor = db.rawQuery("SELECT achieve FROM STUDY WHERE  achieve IS NOT NULL and date >= ?", new String[]{firstSunday});
+
+        int count = cursor.getCount()/7;
+        int[] result = new int[count];
+        int resultcount = 0;
+        int i= 0;
+        int sum = 0;
+        while(cursor.moveToNext()) {
+            sum += cursor.getInt(0);
+            i++;
+            if(i%7 == 0)
+            {
+                if(sum == 7)
+                    result[resultcount]=2;
+                else if(sum >3 && sum<7)
+                    result[resultcount]=1;
+                else
+                    result[resultcount]=0;
+                sum =0;
+                resultcount++;
+            }
+        }
+        return result;
+
+    }
 }

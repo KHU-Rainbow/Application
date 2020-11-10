@@ -17,8 +17,8 @@ import androidx.appcompat.widget.Toolbar;
 변수명 week_rbpic1,...
 */
 public class weekofRainbow extends AppCompatActivity {
-    private ImageView week_rbpic1, week_rbpic2, week_rbpic3, week_rbpic4, week_rbpic5;
-    private TextView week1, week2, week3, week4, week5;
+    private ImageView week_rbpic1, week_rbpic2, week_rbpic3, week_rbpic4;
+    private TextView week1, week2, week3, week4;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -28,25 +28,69 @@ public class weekofRainbow extends AppCompatActivity {
         week_rbpic2 = (ImageView)findViewById(R.id.week_pic_2);
         week_rbpic3 = (ImageView)findViewById(R.id.week_pic_3);
         week_rbpic4 = (ImageView)findViewById(R.id.week_pic_4);
-        week_rbpic5 = (ImageView)findViewById(R.id.week_pic_5);
 
-        week_rbpic1.setImageResource(R.drawable.rb_pic7);
-        week_rbpic2.setImageResource(R.drawable.half_rb_pic4);
-        week_rbpic3.setImageResource(R.drawable.rain_pic5);
-        week_rbpic4.setImageResource(R.drawable.rb_pic7);
-        week_rbpic5.setImageResource(R.drawable.rb_pic8);
+
+        week_rbpic1.setImageResource(0);
+        week_rbpic2.setImageResource(0);
+        week_rbpic3.setImageResource(0);
+        week_rbpic4.setImageResource(0);
 
         week1 = (TextView) findViewById(R.id.week_1);
         week2 = (TextView) findViewById(R.id.week_2);
         week3 = (TextView) findViewById(R.id.week_3);
         week4 = (TextView) findViewById(R.id.week_4);
-        week5 = (TextView) findViewById(R.id.week_5);
+
+        final DataBaseHelper DBHelper = new DataBaseHelper(this);
+        int result[] = DBHelper.getWeekAchieve();
+        for(int i = 0; i < result.length ; i++)
+        {
+            //첫째 주
+            if(i == 0) {
+                week1.setText("첫째 주");
+                if (result[0] == 2)
+                    week_rbpic1.setImageResource(R.drawable.rb_pic7);
+                else if(result[0] == 1)
+                    week_rbpic1.setImageResource(R.drawable.half_rb_pic4);
+                else
+                    week_rbpic1.setImageResource(R.drawable.rain_pic5);
+            }
+            else if(i == 1) {
+                week2.setText("둘째 주");
+                if (result[1] == 2)
+                    week_rbpic2.setImageResource(R.drawable.rb_pic7);
+                else if(result[1] == 1)
+                    week_rbpic2.setImageResource(R.drawable.half_rb_pic4);
+                else
+                    week_rbpic2.setImageResource(R.drawable.rain_pic5);
+            }
+            else if(i ==2) {
+                week3.setText("셋째 주");
+                if (result[2] == 2)
+                    week_rbpic3.setImageResource(R.drawable.rb_pic7);
+                else if(result[2] == 1)
+                    week_rbpic3.setImageResource(R.drawable.half_rb_pic4);
+                else
+                    week_rbpic3.setImageResource(R.drawable.rain_pic5);
+            }
+            else if(i == 3) {
+                week4.setText("넷째 주");
+                if (result[3] == 2)
+                    week_rbpic4.setImageResource(R.drawable.rb_pic7);
+                else if(result[3] == 1)
+                    week_rbpic4.setImageResource(R.drawable.half_rb_pic4);
+                else
+                    week_rbpic4.setImageResource(R.drawable.rain_pic5);
+            }
+
+        }
+
         // 빨 - 주 - 초 - 파 - 보
         week1.setTextColor(Color.parseColor("#eb4934"));
         week2.setTextColor(Color.parseColor("#eba834"));
         week3.setTextColor(Color.parseColor("#3bba14"));
         week4.setTextColor(Color.parseColor("#1288cc"));
-        week5.setTextColor(Color.parseColor("#a753f5"));
+        //week5까지 안나와서 색 수정 필요
+        //week5.setTextColor(Color.parseColor("#a753f5"));
 
         // 툴바 지정
         Toolbar toolbar = findViewById(R.id.toolbar);
