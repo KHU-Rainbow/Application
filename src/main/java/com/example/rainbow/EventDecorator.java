@@ -33,11 +33,9 @@ public class EventDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-<<<<<<< HEAD
+
             view.addSpan(new dotspan_made(16, Color.WHITE));
-=======
-        view.addSpan(new dotspan_made(16, Color.WHITE));
->>>>>>> jina
+
 
     }
 }
