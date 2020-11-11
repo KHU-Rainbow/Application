@@ -6,6 +6,7 @@ import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.os.Bundle;
 import android.text.TextPaint;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -63,8 +64,12 @@ public class date_study extends AppCompatActivity {
         goalminutes = goaltime%60;
 
         TextView tx2 = (TextView)findViewById(R.id.study_time);
-        String studytxt = studyhours+ "시 "+studyminutes+"분 / "+goalhours+"시 "+goalminutes+ "분";
+        String studytxt = studyhours+ "시간 "+studyminutes+"분 / "+goalhours+"시간 "+goalminutes+ "분";
         tx2.setText(studytxt);
+
+        // 프로그래스바 세
+        ProgressBar pb = (ProgressBar)findViewById(R.id.study_progressbar);
+        pb.setProgress(studytime*100/goaltime);
 
         /*
         TextPaint paint2 = tx2.getPaint();
