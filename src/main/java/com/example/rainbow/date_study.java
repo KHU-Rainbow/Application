@@ -33,11 +33,10 @@ public class date_study extends AppCompatActivity {
         String date = Integer.toString(year)+"년 " + Integer.toString(month)+"월 " + Integer.toString(day) + "일";
         tx1.setText(date);
 
+        TextPaint paint1 = tx1.getPaint();
+        float width1 = paint1.measureText(date);
 
-        TextPaint paint2 = tx1.getPaint();
-        float width2 = paint2.measureText(date);
-
-        Shader textShader2 = new LinearGradient(0, 0, width2, tx1.getTextSize(),
+        Shader textShader1 = new LinearGradient(0, 0, width1, tx1.getTextSize(),
                 new int[]{
                         Color.parseColor("#fa5050"),
                         Color.parseColor("#faa850"),
@@ -45,7 +44,63 @@ public class date_study extends AppCompatActivity {
                        Color.parseColor("#60b4f0"),
                         Color.parseColor("#c15df0"),
                 }, null, Shader.TileMode.MIRROR);
-        tx1.getPaint().setShader(textShader2);
+        tx1.getPaint().setShader(textShader1);
+
+        final DataBaseHelper DBHelper = new DataBaseHelper(this);
+        String month_s = Integer.toString(month);
+        if(month_s.length() == 1)
+            month_s = "0" + month;
+        String day_s = Integer.toString(day);
+        if(day_s.length() == 1)
+            day_s = "0" + day;
+        int studytime = DBHelper.getStudyTime(year+"-"+month_s+"-"+day_s);
+        int goaltime = DBHelper.getStudyGoal(year+"-"+month_s+"-"+day_s);
+
+        int studyhours, studyminutes, goalhours, goalminutes;
+        studyhours = studytime/60;
+        studyminutes = studytime%60;
+        goalhours = goaltime/60;
+        goalminutes = goaltime%60;
+
+        TextView tx2 = (TextView)findViewById(R.id.study_time);
+        String studytxt = studyhours+ "시 "+studyminutes+"분 / "+goalhours+"시 "+goalminutes+ "분";
+        tx2.setText(studytxt);
+
+        /*
+        TextPaint paint2 = tx2.getPaint();
+        float width2 = paint2.measureText(studytxt);
+        Shader textShader2 = new LinearGradient(0, 0, width2, tx2.getTextSize(),
+                new int[]{
+                        Color.parseColor("#fa5050"),
+                        Color.parseColor("#faa850"),
+                        Color.parseColor("#66ed5f"),
+                        Color.parseColor("#60b4f0"),
+                        Color.parseColor("#c15df0"),
+                }, null, Shader.TileMode.MIRROR);
+        tx2.getPaint().setShader(textShader2);
+*/
+
+
+        int numofdetect = DBHelper.getDetectNum(year+"-"+month_s+"-"+day_s);
+
+        TextView tx3 = (TextView)findViewById(R.id.phone_time);
+        String detecttxt = numofdetect+"회";
+        tx3.setText(detecttxt);
+
+        /*
+        TextPaint paint3 = tx3.getPaint();
+        float width3 = paint3.measureText(detecttxt);
+
+        Shader textShader3 = new LinearGradient(0, 0, width3, tx3.getTextSize(),
+                new int[]{
+                        Color.parseColor("#fa5050"),
+                        Color.parseColor("#faa850"),
+                        Color.parseColor("#66ed5f"),
+                        Color.parseColor("#60b4f0"),
+                        Color.parseColor("#c15df0"),
+                }, null, Shader.TileMode.MIRROR);
+        tx3.getPaint().setShader(textShader3);
+*/
     }
 
 }

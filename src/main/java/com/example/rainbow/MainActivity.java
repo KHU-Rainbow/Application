@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
         // 한달 전 날짜 구하기
         Calendar mon = getInstance();
-        mon.add(MONTH, -1);
+        mon.add(DATE, -28);
         String beforeMonth = new SimpleDateFormat("yyyy-MM-dd").format(mon.getTime());
         // 달력 기본 설정
         calendarView.state().edit()
@@ -69,8 +69,9 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
                 .setCalendarDisplayMode(CalendarMode.MONTHS)
                 .commit();
 
-        // 디비: dot 표시할 날짜 지정(미완)
-        String[] result = {"2020,10,4", "2020,10,5", "2020,10,10","2020,10,11","2020,10,12","2020,10,13","2020,10,14","2020,10,15","2020,10,16"};
+        // 디비: dot 표시하지 않을 날짜 지정(목표를 달성하지 못한 날
+        final DataBaseHelper DBHelper = new DataBaseHelper(this);
+        String[] result = DBHelper.getNotAchievedDays();
         new ApiSimulator(result).executeOnExecutor(Executors.newSingleThreadExecutor());
 
         // 툴바 지정
@@ -124,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
             //string 문자열인 Time_Result 을 받아와서 ,를 기준으로짜르고 string을 int 로 변환
             for(int i = 0 ; i < Time_Result.length ; i ++){
                 CalendarDay day = CalendarDay.from(calendar);
-                String[] time = Time_Result[i].split(",");
+                String[] time = Time_Result[i].split("-");
                 int year = Integer.parseInt(time[0]);
                 int month = Integer.parseInt(time[1]);
                 int dayy = Integer.parseInt(time[2]);
