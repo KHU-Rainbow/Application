@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
 import androidx.annotation.Nullable;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
@@ -33,14 +31,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String[] result;
 
         Cursor cursor = db.rawQuery("SELECT date FROM STUDY WHERE achieve = 0",null);
-        int count = cursor.getCount();
-        result = new String[count];
+        result = new String[cursor.getCount()];
         int i= 0;
         while(cursor.moveToNext()) {
             result[i] = cursor.getString(0);
             i++;
         }
         db.close();
+
         return result;
     }
 
@@ -104,6 +102,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    // 주간 평
     public int[] getWeekAchieve()
     {
         SQLiteDatabase db = getReadableDatabase();
