@@ -26,5 +26,6 @@
         <activity android:name=".setting_time"/>
         <activity android:name=".weekofRainbow"/>
     </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>
