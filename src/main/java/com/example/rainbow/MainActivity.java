@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,11 @@ import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -69,9 +75,12 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
                 .setCalendarDisplayMode(CalendarMode.MONTHS)
                 .commit();
 
-        // 디비: dot 표시하지 않을 날짜 지정(목표를 달성하지 못한 날
+
+        // 디비: dot 표시하지 않을 날짜 지정(목표를 달성하지 못한 날)
         final DataBaseHelper DBHelper = new DataBaseHelper(this);
+        // 달성하지 못한날을 string배열 형태로 불러옴
         String[] result = DBHelper.getNotAchievedDays();
+        //result에 있는 날들에 점 찍기
         new ApiSimulator(result).executeOnExecutor(Executors.newSingleThreadExecutor());
 
         // 툴바 지정
@@ -122,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
             /*특정날짜 달력에 점표시해주는곳*/
             /*월은 0이 1월 년,일은 그대로*/
-            //string 문자열인 Time_Result 을 받아와서 ,를 기준으로짜르고 string을 int 로 변환
+            //string 문자열인 Time_Result 을 받아와서 -를 기준으로짜르고 string을 int 로 변환
             for(int i = 0 ; i < Time_Result.length ; i ++){
                 CalendarDay day = CalendarDay.from(calendar);
                 String[] time = Time_Result[i].split("-");
@@ -131,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
                 int dayy = Integer.parseInt(time[2]);
 
                 dates.add(day);
-                calendar.set(year,month-1,dayy);
+                calendar.set(year, month-1, dayy);
             }
 
             return dates;
@@ -142,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
             if (isFinishing()) {
                 return;
             }
-            calendarView.addDecorator(new EventDecorator(Color.RED, calendarDays));
+            calendarView.addDecorator(new EventDecorator(calendarDays));
         }
     }
 

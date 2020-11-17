@@ -6,11 +6,19 @@ import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.os.Bundle;
 import android.text.TextPaint;
+import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class date_study extends AppCompatActivity {
     TextView tx1;
@@ -19,12 +27,13 @@ public class date_study extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.date_study_page);
 
+        //툴바 세팅
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setLogo(R.drawable.logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
-        // 날짜 값 넘겨 받기
+        // 날짜 값 전 페이지로부터 넘겨 받기
         Intent intent = getIntent();
         tx1 = (TextView)findViewById(R.id.today_date);
         int year = intent.getExtras().getInt("Year");
@@ -33,9 +42,9 @@ public class date_study extends AppCompatActivity {
         String date = Integer.toString(year)+"년 " + Integer.toString(month)+"월 " + Integer.toString(day) + "일";
         tx1.setText(date);
 
+        //날짜 색바꾸기
         TextPaint paint1 = tx1.getPaint();
         float width1 = paint1.measureText(date);
-
         Shader textShader1 = new LinearGradient(0, 0, width1, tx1.getTextSize(),
                 new int[]{
                         Color.parseColor("#fa5050"),
@@ -46,25 +55,35 @@ public class date_study extends AppCompatActivity {
                 }, null, Shader.TileMode.MIRROR);
         tx1.getPaint().setShader(textShader1);
 
+        // 내장 데이터베이스 연결
         final DataBaseHelper DBHelper = new DataBaseHelper(this);
+        // 1-9일은 Int로 표현했을 때, 01, 09이렇게 표현안되므로 string으로 변경
         String month_s = Integer.toString(month);
         if(month_s.length() == 1)
             month_s = "0" + month;
         String day_s = Integer.toString(day);
         if(day_s.length() == 1)
             day_s = "0" + day;
+
+        //string으로 변경한 날짜로 공부시간, 목표시간 구해서 분단위 int로 넣기(내장디비)
         int studytime = DBHelper.getStudyTime(year+"-"+month_s+"-"+day_s);
         int goaltime = DBHelper.getStudyGoal(year+"-"+month_s+"-"+day_s);
 
+        // 분단위로 시:분 만들기
         int studyhours, studyminutes, goalhours, goalminutes;
         studyhours = studytime/60;
         studyminutes = studytime%60;
         goalhours = goaltime/60;
         goalminutes = goaltime%60;
 
+        // 공부시간/목표시간
         TextView tx2 = (TextView)findViewById(R.id.study_time);
-        String studytxt = studyhours+ "시 "+studyminutes+"분 / "+goalhours+"시 "+goalminutes+ "분";
+        String studytxt = studyhours+ "시간 "+studyminutes+"분 / "+goalhours+"시간 "+goalminutes+ "분";
         tx2.setText(studytxt);
+
+        // 프로그래스바 세팅
+        ProgressBar pb = (ProgressBar)findViewById(R.id.study_progressbar);
+        pb.setProgress(studytime*100/goaltime);
 
         /*
         TextPaint paint2 = tx2.getPaint();
@@ -80,9 +99,10 @@ public class date_study extends AppCompatActivity {
         tx2.getPaint().setShader(textShader2);
 */
 
-
+        // 설정한 날짜로 detect 횟수 받아오기(내장디비)
         int numofdetect = DBHelper.getDetectNum(year+"-"+month_s+"-"+day_s);
 
+        // 00회
         TextView tx3 = (TextView)findViewById(R.id.phone_time);
         String detecttxt = numofdetect+"회";
         tx3.setText(detecttxt);

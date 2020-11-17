@@ -29,7 +29,7 @@ public class weekofRainbow extends AppCompatActivity {
         week_rbpic3 = (ImageView)findViewById(R.id.week_pic_3);
         week_rbpic4 = (ImageView)findViewById(R.id.week_pic_4);
 
-
+        //pic 숨겨놓기
         week_rbpic1.setImageResource(0);
         week_rbpic2.setImageResource(0);
         week_rbpic3.setImageResource(0);
@@ -40,20 +40,26 @@ public class weekofRainbow extends AppCompatActivity {
         week3 = (TextView) findViewById(R.id.week_3);
         week4 = (TextView) findViewById(R.id.week_4);
 
+
+        // 내장데이터베이스 연결 및 일주일간 성취도 불러오기
         final DataBaseHelper DBHelper = new DataBaseHelper(this);
+        // 일주일마다의 성취도를 int배열 형태로 불러옴
+        // 3: 7일 모두 달성, 2: 4-6일 달성, 1:3일이하 달성
+        // 예시) [3,2,1]
         int result[] = DBHelper.getWeekAchieve();
         for(int i = 0; i < result.length ; i++)
         {
-            //첫째 주
+            //첫째 주가 존재하면
             if(i == 0) {
                 week1.setText("첫째 주");
-                if (result[0] == 2)
+                if (result[0] == 2) // 7일 모두 달성한 경우
                     week_rbpic1.setImageResource(R.drawable.rb_pic7);
-                else if(result[0] == 1)
+                else if (result[0] == 1) // 4-6일 달성한 경우
                     week_rbpic1.setImageResource(R.drawable.half_rb_pic4);
-                else
+                else    // 3일 이하 달성한 경우
                     week_rbpic1.setImageResource(R.drawable.rain_pic5);
             }
+            //둘째 주가 존재하면
             else if(i == 1) {
                 week2.setText("둘째 주");
                 if (result[1] == 2)
@@ -63,6 +69,7 @@ public class weekofRainbow extends AppCompatActivity {
                 else
                     week_rbpic2.setImageResource(R.drawable.rain_pic5);
             }
+            // 셋째 주가 존재하면
             else if(i ==2) {
                 week3.setText("셋째 주");
                 if (result[2] == 2)
@@ -72,6 +79,7 @@ public class weekofRainbow extends AppCompatActivity {
                 else
                     week_rbpic3.setImageResource(R.drawable.rain_pic5);
             }
+            // 넷째 주가 존재하면
             else if(i == 3) {
                 week4.setText("넷째 주");
                 if (result[3] == 2)
