@@ -17,12 +17,10 @@ import java.util.HashSet;
 public class EventDecorator implements DayViewDecorator {
 
     private final Calendar calendar = Calendar.getInstance();
-    private int color;
     private HashSet<CalendarDay> dates;
 
     public EventDecorator(){}
-    public EventDecorator(int color, Collection<CalendarDay> dates) {
-        this.color = color;
+    public EventDecorator(Collection<CalendarDay> dates) {
         this.dates = new HashSet<>(dates);
     }
 

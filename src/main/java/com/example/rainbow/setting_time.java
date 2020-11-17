@@ -32,18 +32,21 @@ public class setting_time  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_time_page);
 
-        // 설정된 시간 값 불러오기
+        // 내장디비 연결
         final DataBaseHelper DBHelper = new DataBaseHelper(this);
+        //설정한 목표시간 불러오기(분단위의 값 return)
         int settingtime = DBHelper.getSettingTime();
+        // 불러온 분 단위의 목표시간 시:분으로 만들기
         int settinghours, settingminutes;
         settinghours = settingtime/60;
         settingminutes = settingtime%60;
 
+        //목표시간 텍스트 설정
         final TextView goal_time = (TextView)findViewById(R.id.goal_time);
         String goaltxt = settinghours+"시간 "+settingminutes+"분";
         goal_time.setText(goaltxt);
 
-
+        //텍스트 꾸미기
         TextPaint paint2 = goal_time.getPaint();
         float width2 = paint2.measureText(goaltxt);
         Shader textShader2 = new LinearGradient(0, 0, width2, goal_time.getTextSize(),
@@ -72,11 +75,14 @@ public class setting_time  extends AppCompatActivity {
 
                 hour = timepicker.getCurrentHour();
                 minutes = timepicker.getCurrentMinute();
+                // (내장디비) 분단위로 바꿔서 내장디비 업데이트
                 DBHelper.updateSettingTime(hour*60+minutes);
 
+                // 위에 표시될 텍스트 설정한 시간으로 재설정
                 String goaltxt2= hour+"시간 "+minutes+"분";
                 goal_time.setText(goaltxt2);
 
+                //재설정한 텍스트 꾸미기
                 TextPaint paint = goal_text .getPaint();
                 float width = paint.measureText(goaltxt2);
                 Shader textShader = new LinearGradient(0, 0, width, goal_text .getTextSize(),
@@ -98,6 +104,8 @@ public class setting_time  extends AppCompatActivity {
 
         //goal_text.setText(setting_time.this, hour+"시간"+minutes+"분");
         //goal_text.setTextSize(30);
+
+        // 툴바 세팅
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setLogo(R.drawable.logo);
