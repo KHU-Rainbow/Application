@@ -72,9 +72,11 @@ public class weekofRainbow extends AppCompatActivity {
         mMyAPI= retrofit.create(RainbowAPI.class);
 
 
-        final int[][] result = new int[1][1];
+        //final int[][] result = new int[1][1];
         //주간평가 불러오
-        Call<PostItem> getCall = mMyAPI.get_estimation(previous,today);
+        //Call<PostItem> getCall = mMyAPI.get_estimation(previous,today);
+        int[] result = mMyAPI.get_estimation(previous,today);
+        /*
         getCall.enqueue(new Callback<PostItem>() {
             @Override
             public void onResponse(Call<PostItem> call, Response<PostItem> response) {
@@ -87,16 +89,16 @@ public class weekofRainbow extends AppCompatActivity {
             public void onFailure(Call<PostItem> call, Throwable t) {
             }
         });
+*/
 
-
-        for(int i = 0; i < result[0].length ; i++)
+        for(int i = 0; i < result.length ; i++)
         {
             //첫째 주가 존재하면
             if(i == 0) {
                 week1.setText("첫째 주");
-                if (result[0][0] == 2) // 7일 모두 달성한 경우
+                if (result[0] == 2) // 7일 모두 달성한 경우
                     week_rbpic1.setImageResource(R.drawable.rb_pic7);
-                else if (result[0][0] == 1) // 4-6일 달성한 경우
+                else if (result[0] == 1) // 4-6일 달성한 경우
                     week_rbpic1.setImageResource(R.drawable.half_rb_pic4);
                 else    // 3일 이하 달성한 경우
                     week_rbpic1.setImageResource(R.drawable.rain_pic5);
@@ -104,9 +106,9 @@ public class weekofRainbow extends AppCompatActivity {
             //둘째 주가 존재하면
             else if(i == 1) {
                 week2.setText("둘째 주");
-                if (result[0][1] == 2)
+                if (result[1] == 2)
                     week_rbpic2.setImageResource(R.drawable.rb_pic7);
-                else if(result[0][1] == 1)
+                else if(result[1] == 1)
                     week_rbpic2.setImageResource(R.drawable.half_rb_pic4);
                 else
                     week_rbpic2.setImageResource(R.drawable.rain_pic5);
@@ -114,9 +116,9 @@ public class weekofRainbow extends AppCompatActivity {
             // 셋째 주가 존재하면
             else if(i ==2) {
                 week3.setText("셋째 주");
-                if (result[0][2] == 2)
+                if (result[2] == 2)
                     week_rbpic3.setImageResource(R.drawable.rb_pic7);
-                else if(result[0][2] == 1)
+                else if(result[2] == 1)
                     week_rbpic3.setImageResource(R.drawable.half_rb_pic4);
                 else
                     week_rbpic3.setImageResource(R.drawable.rain_pic5);
@@ -124,9 +126,9 @@ public class weekofRainbow extends AppCompatActivity {
             // 넷째 주가 존재하면
             else if(i == 3) {
                 week4.setText("넷째 주");
-                if (result[0][3] == 2)
+                if (result[3] == 2)
                     week_rbpic4.setImageResource(R.drawable.rb_pic7);
-                else if(result[0][3] == 1)
+                else if(result[3] == 1)
                     week_rbpic4.setImageResource(R.drawable.half_rb_pic4);
                 else
                     week_rbpic4.setImageResource(R.drawable.rain_pic5);

@@ -55,10 +55,11 @@ public class setting_time  extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         mMyAPI= retrofit.create(RainbowAPI.class);
-        final int[] settingtime = {0};
+        //final int[] settingtime = {0};
 
         //오늘 날짜로 설정된 목표 공부 시간 불러오기
-        Call<PostItem> getCall = mMyAPI.get_study_goal(today);
+        int settingtime = mMyAPI.get_study_goal(today);
+        /*
         getCall.enqueue(new Callback<PostItem>() {
             @Override
             public void onResponse(Call<PostItem> call, Response<PostItem> response) {
@@ -71,7 +72,7 @@ public class setting_time  extends AppCompatActivity {
             public void onFailure(Call<PostItem> call, Throwable t) {
             }
         });
-
+*/
 
 
         // 내장디비 연결
@@ -80,8 +81,8 @@ public class setting_time  extends AppCompatActivity {
         //int settingtime = DBHelper.getSettingTime();
         // 불러온 분 단위의 목표시간 시:분으로 만들기
         int settinghours, settingminutes;
-        settinghours = settingtime[0] /60;
-        settingminutes = settingtime[0] %60;
+        settinghours = settingtime /60;
+        settingminutes = settingtime %60;
 
         //목표시간 텍스트 설정
         final TextView goal_time = (TextView)findViewById(R.id.goal_time);
@@ -118,9 +119,10 @@ public class setting_time  extends AppCompatActivity {
                 hour = timepicker.getCurrentHour();
                 minutes = timepicker.getCurrentMinute();
 
-                PostItem inputitem = new PostItem();
-                inputitem.set_goal(hour*60+minutes);
-                Call<PostItem> postGoal = mMyAPI.post_goal(inputitem);
+                //PostItem inputitem = new PostItem();
+                //inputitem.set_goal(hour*60+minutes);
+                int postGoal = mMyAPI.post_goal(today,hour*60+minutes);
+                /*
                 postGoal.enqueue(new Callback<PostItem>() {
                     @Override
                     public void onResponse(Call<PostItem> call, Response<PostItem> response) {
@@ -132,7 +134,7 @@ public class setting_time  extends AppCompatActivity {
 
                     }
                 });
-
+*/
                 //DBHelper.updateSettingTime(hour*60+minutes);
 
                 // 위에 표시될 텍스트 설정한 시간으로 재설정

@@ -85,8 +85,10 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
         String[] param = makeDayForm();
 
-        final String[][] result = new String[1][1];
-        Call<PostItem> getCall = mMyAPI.get_achieved_days(param[0], param[1]);
+        //final String[][] result = new String[1][1];
+        String[] result = mMyAPI.get_achieved_days(param[0],param[1]);
+        //Call<PostItem> getCall = mMyAPI.get_achieved_days(param[0], param[1]);
+        /*
         getCall.enqueue(new Callback<PostItem>() {
             @Override
             public void onResponse(Call<PostItem> call, Response<PostItem> response) {
@@ -100,13 +102,13 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
             }
         });
 
-
+*/
         // 디비: dot 표시하지 않을 날짜 지정(목표를 달성하지 못한 날)
         //final DataBaseHelper DBHelper = new DataBaseHelper(this);
         // 달성하지 못한날을 string배열 형태로 불러옴
         //String[] result = DBHelper.getNotAchievedDays();
         //result에 있는 날들에 점 찍기
-        new ApiSimulator(result[0]).executeOnExecutor(Executors.newSingleThreadExecutor());
+        new ApiSimulator(result).executeOnExecutor(Executors.newSingleThreadExecutor());
 
         // 툴바 지정
         Toolbar toolbar = findViewById(R.id.toolbar);

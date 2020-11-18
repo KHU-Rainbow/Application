@@ -20,26 +20,26 @@ public interface RainbowAPI{
 
     // 1
     @GET("achievement")
-    Call<PostItem> get_achieved_days(@Query("previous") String previous, @Query("present") String present);
+    String[] get_achieved_days(@Query("previous") String previous, @Query("present") String present);
 
     // 2
     @GET("estimation")
-    Call<PostItem> get_estimation(@Query("previous") String previous, @Query("present") String present);
+    int[] get_estimation(@Query("previous") String previous, @Query("present") String present);
 
     // 3
     @GET("time")
-    Call<PostItem> get_study_time(@Query("date") String date);
+    int get_study_time(@Query("date") String date);
 
     // 4
     @GET("goal")
-    Call<PostItem> get_study_goal(@Query("date") String date);
+    int get_study_goal(@Query("date") String date);
 
     // 5
     @GET("interrupt")
-    Call<PostItem> get_detected_time(@Query("date") String date);
+    int get_detected_time(@Query("date") String date);
 
     // 6
     @POST("/goal/")
-    Call<PostItem> post_goal(@Body PostItem post);
+    int post_goal(@Query("date") String date, @Query("settingtime") int settingtime);
 
 }
