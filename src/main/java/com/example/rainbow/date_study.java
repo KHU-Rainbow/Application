@@ -20,21 +20,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 public class date_study extends AppCompatActivity {
     TextView tx1;
-    // 여기
-    private final String BASE_URL = "https://r89kbtj8x9.execute-api.us-east-1.amazonaws.com/dev/";
+    private final String BASE_URL = "https://r89kbtj8x9.execute-api.us-east-1.amazonaws.com/last/";
     private RainbowAPI mMyAPI;
 
     @Override
     public void onCreate(@Nullable  Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.date_study_page);
-        // 여기
-        initMyAPI(BASE_URL);
 
         //툴바 세팅
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -59,13 +53,13 @@ public class date_study extends AppCompatActivity {
                         Color.parseColor("#fa5050"),
                         Color.parseColor("#faa850"),
                         Color.parseColor("#66ed5f"),
-                       Color.parseColor("#60b4f0"),
+                        Color.parseColor("#60b4f0"),
                         Color.parseColor("#c15df0"),
                 }, null, Shader.TileMode.MIRROR);
         tx1.getPaint().setShader(textShader1);
 
         // 내장 데이터베이스 연결
-        final DataBaseHelper DBHelper = new DataBaseHelper(this);
+        //final DataBaseHelper DBHelper = new DataBaseHelper(this);
         // 1-9일은 Int로 표현했을 때, 01, 09이렇게 표현안되므로 string으로 변경
         String month_s = Integer.toString(month);
         if(month_s.length() == 1)
@@ -75,9 +69,14 @@ public class date_study extends AppCompatActivity {
             day_s = "0" + day;
 
         //string으로 변경한 날짜로 공부시간, 목표시간 구해서 분단위 int로 넣기(내장디비)
-        int studytime = DBHelper.getStudyTime(year+"-"+month_s+"-"+day_s);
-        int goaltime = DBHelper.getStudyGoal(year+"-"+month_s+"-"+day_s);
+        int studytime =  mMyAPI.get_study_time(year+"-"+month_s+"-"+day_s);
+        int goaltime = mMyAPI.get_study_goal(year+"-"+month_s+"-"+day_s);
+        // int studytime = DBHelper.getStudyTime(year+"-"+month_s+"-"+day_s);
+        //  int goaltime = DBHelper.getStudyGoal(year+"-"+month_s+"-"+day_s);
 
+
+        studytime /=60;
+        goaltime /=60;
         // 분단위로 시:분 만들기
         int studyhours, studyminutes, goalhours, goalminutes;
         studyhours = studytime/60;
@@ -109,8 +108,8 @@ public class date_study extends AppCompatActivity {
 */
 
         // 설정한 날짜로 detect 횟수 받아오기(내장디비)
-        int numofdetect = DBHelper.getDetectNum(year+"-"+month_s+"-"+day_s);
-
+        //int numofdetect = DBHelper.getDetectNum(year+"-"+month_s+"-"+day_s);
+        int numofdetect = mMyAPI.get_detected_time(year+"-"+month_s+"-"+day_s);
         // 00회
         TextView tx3 = (TextView)findViewById(R.id.phone_time);
         String detecttxt = numofdetect+"회";
@@ -119,7 +118,6 @@ public class date_study extends AppCompatActivity {
         /*
         TextPaint paint3 = tx3.getPaint();
         float width3 = paint3.measureText(detecttxt);
-
         Shader textShader3 = new LinearGradient(0, 0, width3, tx3.getTextSize(),
                 new int[]{
                         Color.parseColor("#fa5050"),
@@ -130,36 +128,6 @@ public class date_study extends AppCompatActivity {
                 }, null, Shader.TileMode.MIRROR);
         tx3.getPaint().setShader(textShader3);
 */
-    }
-
-    // 여기
-    /* 예시
-        Call<List<PostItem>> getCall = mMyAPI.get_posts();
-        getCall.enqueue(new Callback<List<PostItem>>() {
-            @Override
-            public void onResponse(Call<List<PostItem>> call, Response<List<PostItem>> response) {
-                if (response.isSuccessful()) {
-                    List<PostItem> mList = response.body();
-                    String result = "";
-                    for (PostItem item : mList) {
-                        result += "title : " + item.getTitle() + " text: " + item.getText() + "\n";
-                    }
-                }
-            }
-            @Override
-            public void onFailure(Call<List<PostItem>> call, Throwable t) {
-            }
-        });
-*/
-
-    // 여기
-    private void initMyAPI(String baseUrl){
-//        String baseUrl = "https://r89kbtj8x9.execute-api.us-east-1.amazonaws.com/dev/";
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        mMyAPI= retrofit.create(RainbowAPI.class);
     }
 
 }
