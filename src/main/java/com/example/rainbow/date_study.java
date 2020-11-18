@@ -53,7 +53,7 @@ public class date_study extends AppCompatActivity {
                         Color.parseColor("#fa5050"),
                         Color.parseColor("#faa850"),
                         Color.parseColor("#66ed5f"),
-                       Color.parseColor("#60b4f0"),
+                        Color.parseColor("#60b4f0"),
                         Color.parseColor("#c15df0"),
                 }, null, Shader.TileMode.MIRROR);
         tx1.getPaint().setShader(textShader1);
@@ -71,8 +71,8 @@ public class date_study extends AppCompatActivity {
         //string으로 변경한 날짜로 공부시간, 목표시간 구해서 분단위 int로 넣기(내장디비)
         int studytime =  mMyAPI.get_study_time(year+"-"+month_s+"-"+day_s);
         int goaltime = mMyAPI.get_study_goal(year+"-"+month_s+"-"+day_s);
-       // int studytime = DBHelper.getStudyTime(year+"-"+month_s+"-"+day_s);
-      //  int goaltime = DBHelper.getStudyGoal(year+"-"+month_s+"-"+day_s);
+        // int studytime = DBHelper.getStudyTime(year+"-"+month_s+"-"+day_s);
+        //  int goaltime = DBHelper.getStudyGoal(year+"-"+month_s+"-"+day_s);
 
 
         studytime /=60;
@@ -118,7 +118,6 @@ public class date_study extends AppCompatActivity {
         /*
         TextPaint paint3 = tx3.getPaint();
         float width3 = paint3.measureText(detecttxt);
-
         Shader textShader3 = new LinearGradient(0, 0, width3, tx3.getTextSize(),
                 new int[]{
                         Color.parseColor("#fa5050"),
