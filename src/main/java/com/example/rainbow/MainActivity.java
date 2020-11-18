@@ -26,16 +26,17 @@ import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.Executors;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static java.util.Calendar.*;
 
@@ -44,10 +45,16 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     private final OneDayDecorator oneDayDecorator = new OneDayDecorator();
     private final Calendar calendar = Calendar.getInstance();
     MaterialCalendarView calendarView;
+
+    private final String BASE_URL = "https://r89kbtj8x9.execute-api.us-east-1.amazonaws.com/dev/";
+    private RainbowAPI mMyAPI;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initMyAPI(BASE_URL);
 
         // 달력 함수
         calendarView = (MaterialCalendarView) findViewById((R.id.calendarView));
@@ -76,6 +83,24 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
                 .commit();
 
 
+/* 예시
+        Call<List<PostItem>> getCall = mMyAPI.get_posts();
+        getCall.enqueue(new Callback<List<PostItem>>() {
+            @Override
+            public void onResponse(Call<List<PostItem>> call, Response<List<PostItem>> response) {
+                if (response.isSuccessful()) {
+                    List<PostItem> mList = response.body();
+                    String result = "";
+                    for (PostItem item : mList) {
+                        result += "title : " + item.getTitle() + " text: " + item.getText() + "\n";
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<List<PostItem>> call, Throwable t) {
+            }
+        });
+*/
         // 디비: dot 표시하지 않을 날짜 지정(목표를 달성하지 못한 날)
         final DataBaseHelper DBHelper = new DataBaseHelper(this);
         // 달성하지 못한날을 string배열 형태로 불러옴
@@ -196,6 +221,15 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     public void onClick(View v){
         Intent intent = new Intent(MainActivity.this,weekofRainbow.class);
         startActivity(intent);
+    }
+
+    private void initMyAPI(String baseUrl){
+//        String baseUrl = "https://r89kbtj8x9.execute-api.us-east-1.amazonaws.com/dev/";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        mMyAPI= retrofit.create(RainbowAPI.class);
     }
 
 }
