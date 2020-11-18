@@ -20,12 +20,21 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class date_study extends AppCompatActivity {
     TextView tx1;
+    // 여기
+    private final String BASE_URL = "https://r89kbtj8x9.execute-api.us-east-1.amazonaws.com/dev/";
+    private RainbowAPI mMyAPI;
+
     @Override
     public void onCreate(@Nullable  Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.date_study_page);
+        // 여기
+        initMyAPI(BASE_URL);
 
         //툴바 세팅
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -121,6 +130,36 @@ public class date_study extends AppCompatActivity {
                 }, null, Shader.TileMode.MIRROR);
         tx3.getPaint().setShader(textShader3);
 */
+    }
+
+    // 여기
+    /* 예시
+        Call<List<PostItem>> getCall = mMyAPI.get_posts();
+        getCall.enqueue(new Callback<List<PostItem>>() {
+            @Override
+            public void onResponse(Call<List<PostItem>> call, Response<List<PostItem>> response) {
+                if (response.isSuccessful()) {
+                    List<PostItem> mList = response.body();
+                    String result = "";
+                    for (PostItem item : mList) {
+                        result += "title : " + item.getTitle() + " text: " + item.getText() + "\n";
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<List<PostItem>> call, Throwable t) {
+            }
+        });
+*/
+
+    // 여기
+    private void initMyAPI(String baseUrl){
+//        String baseUrl = "https://r89kbtj8x9.execute-api.us-east-1.amazonaws.com/dev/";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        mMyAPI= retrofit.create(RainbowAPI.class);
     }
 
 }
