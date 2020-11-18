@@ -29,6 +29,7 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executors;
 
@@ -82,31 +83,30 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
                 .setCalendarDisplayMode(CalendarMode.MONTHS)
                 .commit();
 
+        String[] param = makeDayForm();
 
-/* 예시
-        Call<List<PostItem>> getCall = mMyAPI.get_posts();
-        getCall.enqueue(new Callback<List<PostItem>>() {
+        final String[][] result = new String[1][1];
+        Call<PostItem> getCall = mMyAPI.get_achieved_days(param[0], param[1]);
+        getCall.enqueue(new Callback<PostItem>() {
             @Override
-            public void onResponse(Call<List<PostItem>> call, Response<List<PostItem>> response) {
+            public void onResponse(Call<PostItem> call, Response<PostItem> response) {
                 if (response.isSuccessful()) {
-                    List<PostItem> mList = response.body();
-                    String result = "";
-                    for (PostItem item : mList) {
-                        result += "title : " + item.getTitle() + " text: " + item.getText() + "\n";
-                    }
+                    PostItem mList = response.body();
+                    result[0] = mList.get_achievementList();
                 }
             }
             @Override
-            public void onFailure(Call<List<PostItem>> call, Throwable t) {
+            public void onFailure(Call<PostItem> call, Throwable t) {
             }
         });
-*/
+
+
         // 디비: dot 표시하지 않을 날짜 지정(목표를 달성하지 못한 날)
-        final DataBaseHelper DBHelper = new DataBaseHelper(this);
+        //final DataBaseHelper DBHelper = new DataBaseHelper(this);
         // 달성하지 못한날을 string배열 형태로 불러옴
-        String[] result = DBHelper.getNotAchievedDays();
+        //String[] result = DBHelper.getNotAchievedDays();
         //result에 있는 날들에 점 찍기
-        new ApiSimulator(result).executeOnExecutor(Executors.newSingleThreadExecutor());
+        new ApiSimulator(result[0]).executeOnExecutor(Executors.newSingleThreadExecutor());
 
         // 툴바 지정
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -206,10 +206,12 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     }
 
     // 설정 눌렀을 때 시간 설정 페이지로 이동
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item, @NonNull CalendarDay date) {
         switch (item.getItemId()) {
             case R.id.action_btn1:
                 Intent intent = new Intent(this, setting_time.class);
+                String today = makeDayForm()[1];
+                intent.putExtra("today", today);
                 startActivity(intent);
                 return true;
             default:
@@ -220,7 +222,49 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     // 이 주의 무지개 보기 버튼 클릭시 페이지 이동
     public void onClick(View v){
         Intent intent = new Intent(MainActivity.this,weekofRainbow.class);
+
+        String[] param = makeDayForm();
+        intent.putExtra("previous", param[0]);
+        intent.putExtra("today",param[1]);
+
         startActivity(intent);
+    }
+
+    //날짜 'yyyy-mm-dd'형태로 출력
+    public String[] makeDayForm()
+    {
+        Calendar cal = getInstance();
+        int year = cal.get(YEAR);
+        int month = cal.get(MONTH)+ 1;
+        int day = cal.get(DATE);
+        String today = Integer.toString(year);
+
+        String month_s = Integer.toString(month);
+        if(month_s.length() == 1)
+            month_s = "0" + month;
+        String day_s = Integer.toString(day);
+        if(day_s.length() == 1)
+            day_s = "0" + day;
+
+        today += "-"+month_s+"-"+day_s;
+
+        cal.add(DATE, -28);
+        int p_year = cal.get(YEAR);
+        int p_month = cal.get(MONTH)+ 1;
+        int p_day = cal.get(DATE);
+        String previous = Integer.toString(p_year);
+        String ps_month = Integer.toString(p_month);
+        if(ps_month.length() == 1)
+            ps_month = "0" + p_month;
+        String ps_day = Integer.toString(p_day);
+        if(ps_day.length() == 1)
+            ps_day = "0" + p_day;
+
+        previous += "-"+ps_month+"-"+ps_day;
+
+
+        String[] arrtoday = {previous, today};
+        return arrtoday;
     }
 
     private void initMyAPI(String baseUrl){

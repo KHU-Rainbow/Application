@@ -5,9 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_logoicon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_logoicon"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
@@ -27,5 +27,6 @@
         <activity android:name=".setting_time"/>
         <activity android:name=".weekofRainbow"/>
     </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

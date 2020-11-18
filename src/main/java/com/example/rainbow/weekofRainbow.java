@@ -1,13 +1,21 @@
 package com.example.rainbow;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /* textView id : week_1, week_2...  ImageView id : week_pic_1, week_pic_2....
 무지개 : rb_pic7
@@ -19,6 +27,8 @@ import androidx.appcompat.widget.Toolbar;
 public class weekofRainbow extends AppCompatActivity {
     private ImageView week_rbpic1, week_rbpic2, week_rbpic3, week_rbpic4;
     private TextView week1, week2, week3, week4;
+    private final String BASE_URL = "https://r89kbtj8x9.execute-api.us-east-1.amazonaws.com/dev/";
+    private RainbowAPI mMyAPI;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -42,19 +52,51 @@ public class weekofRainbow extends AppCompatActivity {
 
 
         // 내장데이터베이스 연결 및 일주일간 성취도 불러오기
-        final DataBaseHelper DBHelper = new DataBaseHelper(this);
+        //final DataBaseHelper DBHelper = new DataBaseHelper(this);
         // 일주일마다의 성취도를 int배열 형태로 불러옴
         // 3: 7일 모두 달성, 2: 4-6일 달성, 1:3일이하 달성
         // 예시) [3,2,1]
-        int result[] = DBHelper.getWeekAchieve();
-        for(int i = 0; i < result.length ; i++)
+        //int result[] = DBHelper.getWeekAchieve();
+
+        //get_estimation
+
+        Intent intent = getIntent();
+        String previous = intent.getExtras().getString("previous");
+        String today = intent.getExtras().getString("today");
+
+        //데이터베이스 설정
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        mMyAPI= retrofit.create(RainbowAPI.class);
+
+
+        final int[][] result = new int[1][1];
+        //주간평가 불러오
+        Call<PostItem> getCall = mMyAPI.get_estimation(previous,today);
+        getCall.enqueue(new Callback<PostItem>() {
+            @Override
+            public void onResponse(Call<PostItem> call, Response<PostItem> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Test",response.body().toString());
+                    result[0] = response.body().get_estimation();
+                }
+            }
+            @Override
+            public void onFailure(Call<PostItem> call, Throwable t) {
+            }
+        });
+
+
+        for(int i = 0; i < result[0].length ; i++)
         {
             //첫째 주가 존재하면
             if(i == 0) {
                 week1.setText("첫째 주");
-                if (result[0] == 2) // 7일 모두 달성한 경우
+                if (result[0][0] == 2) // 7일 모두 달성한 경우
                     week_rbpic1.setImageResource(R.drawable.rb_pic7);
-                else if (result[0] == 1) // 4-6일 달성한 경우
+                else if (result[0][0] == 1) // 4-6일 달성한 경우
                     week_rbpic1.setImageResource(R.drawable.half_rb_pic4);
                 else    // 3일 이하 달성한 경우
                     week_rbpic1.setImageResource(R.drawable.rain_pic5);
@@ -62,9 +104,9 @@ public class weekofRainbow extends AppCompatActivity {
             //둘째 주가 존재하면
             else if(i == 1) {
                 week2.setText("둘째 주");
-                if (result[1] == 2)
+                if (result[0][1] == 2)
                     week_rbpic2.setImageResource(R.drawable.rb_pic7);
-                else if(result[1] == 1)
+                else if(result[0][1] == 1)
                     week_rbpic2.setImageResource(R.drawable.half_rb_pic4);
                 else
                     week_rbpic2.setImageResource(R.drawable.rain_pic5);
@@ -72,9 +114,9 @@ public class weekofRainbow extends AppCompatActivity {
             // 셋째 주가 존재하면
             else if(i ==2) {
                 week3.setText("셋째 주");
-                if (result[2] == 2)
+                if (result[0][2] == 2)
                     week_rbpic3.setImageResource(R.drawable.rb_pic7);
-                else if(result[2] == 1)
+                else if(result[0][2] == 1)
                     week_rbpic3.setImageResource(R.drawable.half_rb_pic4);
                 else
                     week_rbpic3.setImageResource(R.drawable.rain_pic5);
@@ -82,9 +124,9 @@ public class weekofRainbow extends AppCompatActivity {
             // 넷째 주가 존재하면
             else if(i == 3) {
                 week4.setText("넷째 주");
-                if (result[3] == 2)
+                if (result[0][3] == 2)
                     week_rbpic4.setImageResource(R.drawable.rb_pic7);
-                else if(result[3] == 1)
+                else if(result[0][3] == 1)
                     week_rbpic4.setImageResource(R.drawable.half_rb_pic4);
                 else
                     week_rbpic4.setImageResource(R.drawable.rain_pic5);

@@ -1,7 +1,5 @@
 package com.example.rainbow;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -21,27 +19,27 @@ import retrofit2.http.Query;
 public interface RainbowAPI{
 
     // 1
-    @GET("/achievement/")
-    Call<PostItem> get_achieved_days(@Query("achievement") int IsAchieved);
+    @GET("achievement")
+    Call<PostItem> get_achieved_days(@Query("previous") String previous, @Query("present") String present);
 
     // 2
-    @GET("/estimation/")
-    Call<PostItem> get_estimation();
+    @GET("estimation")
+    Call<PostItem> get_estimation(@Query("previous") String previous, @Query("present") String present);
 
     // 3
-    @GET("/time/")
+    @GET("time")
     Call<PostItem> get_study_time(@Query("date") String date);
 
     // 4
-    @GET("/goal/")
+    @GET("goal")
     Call<PostItem> get_study_goal(@Query("date") String date);
 
     // 5
-    @GET("/detectedtime/")
+    @GET("interrupt")
     Call<PostItem> get_detected_time(@Query("date") String date);
 
     // 6
-    @POST("/specifiedgoal/")
+    @POST("/goal/")
     Call<PostItem> post_goal(@Body PostItem post);
 
 }
