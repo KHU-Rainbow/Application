@@ -27,7 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class weekofRainbow extends AppCompatActivity {
     private ImageView week_rbpic1, week_rbpic2, week_rbpic3, week_rbpic4;
     private TextView week1, week2, week3, week4;
-    private final String BASE_URL = "https://r89kbtj8x9.execute-api.us-east-1.amazonaws.com/dev/";
+    private final String BASE_URL = "https://r89kbtj8x9.execute-api.us-east-1.amazonaws.com/last/";
     private RainbowAPI mMyAPI;
 
     protected void onCreate(Bundle savedInstanceState){
@@ -95,7 +95,7 @@ public class weekofRainbow extends AppCompatActivity {
         {
             //첫째 주가 존재하면
             if(i == 0) {
-                week1.setText("첫째 주");
+                week1.setText("3주 전");
                 if (result[0] == 2) // 7일 모두 달성한 경우
                     week_rbpic1.setImageResource(R.drawable.rb_pic7);
                 else if (result[0] == 1) // 4-6일 달성한 경우
@@ -105,7 +105,7 @@ public class weekofRainbow extends AppCompatActivity {
             }
             //둘째 주가 존재하면
             else if(i == 1) {
-                week2.setText("둘째 주");
+                week2.setText("2주 전");
                 if (result[1] == 2)
                     week_rbpic2.setImageResource(R.drawable.rb_pic7);
                 else if(result[1] == 1)
@@ -115,7 +115,7 @@ public class weekofRainbow extends AppCompatActivity {
             }
             // 셋째 주가 존재하면
             else if(i ==2) {
-                week3.setText("셋째 주");
+                week3.setText("1주 전");
                 if (result[2] == 2)
                     week_rbpic3.setImageResource(R.drawable.rb_pic7);
                 else if(result[2] == 1)

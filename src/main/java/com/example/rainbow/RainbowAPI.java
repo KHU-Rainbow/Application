@@ -1,5 +1,7 @@
 package com.example.rainbow;
 
+import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -20,26 +22,26 @@ public interface RainbowAPI{
 
     // 1
     @GET("achievement")
-    String[] get_achieved_days(@Query("previous") String previous, @Query("present") String present);
+    String[] get_achieved_days(@Query("start") String previous, @Query("end") String present);
 
     // 2
     @GET("estimation")
-    int[] get_estimation(@Query("previous") String previous, @Query("present") String present);
+    int[] get_estimation(@Query("start") String previous, @Query("end") String present);
 
     // 3
     @GET("time")
-    int get_study_time(@Query("date") String date);
+    int get_study_time(@Query("target") String date);
 
     // 4
     @GET("goal")
-    int get_study_goal(@Query("date") String date);
+    int get_study_goal(@Query("target") String date);
 
     // 5
     @GET("interrupt")
-    int get_detected_time(@Query("date") String date);
+    int get_detected_time(@Query("target") String date);
 
     // 6
-    @POST("/goal/")
-    int post_goal(@Query("date") String date, @Query("settingtime") int settingtime);
-
+    @POST("goal")
+    //int post_goal(@Query("date") String date, @Query("target") int settingtime);
+    int post_goal(@Body JSONObject goal);
 }

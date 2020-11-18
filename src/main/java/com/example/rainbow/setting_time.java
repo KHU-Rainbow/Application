@@ -25,6 +25,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,7 +44,7 @@ public class setting_time  extends AppCompatActivity {
     Intent intent = getIntent();
     String today = intent.getExtras().getString("today");
 
-    private final String BASE_URL = "https://r89kbtj8x9.execute-api.us-east-1.amazonaws.com/dev/";
+    private final String BASE_URL = "https://r89kbtj8x9.execute-api.us-east-1.amazonaws.com/last/";
     private RainbowAPI mMyAPI;
 
     @Override
@@ -80,6 +83,7 @@ public class setting_time  extends AppCompatActivity {
         //설정한 목표시간 불러오기(분단위의 값 return)
         //int settingtime = DBHelper.getSettingTime();
         // 불러온 분 단위의 목표시간 시:분으로 만들기
+        settingtime /= 60;
         int settinghours, settingminutes;
         settinghours = settingtime /60;
         settingminutes = settingtime %60;
@@ -121,7 +125,15 @@ public class setting_time  extends AppCompatActivity {
 
                 //PostItem inputitem = new PostItem();
                 //inputitem.set_goal(hour*60+minutes);
-                int postGoal = mMyAPI.post_goal(today,hour*60+minutes);
+
+                JSONObject object = new JSONObject();
+                try {
+                    object.put("date",today);
+                    object.put("settingtime",(hour*60+minutes)*60);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                int postGoal = mMyAPI.post_goal(object);
                 /*
                 postGoal.enqueue(new Callback<PostItem>() {
                     @Override
