@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     private final Calendar calendar = Calendar.getInstance();
     MaterialCalendarView calendarView;
 
-    private final String BASE_URL = "https://r89kbtj8x9.execute-api.us-east-1.amazonaws.com/dev/";
+    private final String BASE_URL = "https://r89kbtj8x9.execute-api.us-east-1.amazonaws.com/last/";
     private RainbowAPI mMyAPI;
 
     @Override
