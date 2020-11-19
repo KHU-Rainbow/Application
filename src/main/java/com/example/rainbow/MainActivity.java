@@ -6,12 +6,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
 import com.example.rainbow.decorator.FridayDecorator;
@@ -47,15 +51,11 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     private final Calendar calendar = Calendar.getInstance();
     MaterialCalendarView calendarView;
 
-    private final String BASE_URL = "https://r89kbtj8x9.execute-api.us-east-1.amazonaws.com/last/";
-    private RainbowAPI mMyAPI;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initMyAPI(BASE_URL);
 
         // 달력 함수
         calendarView = (MaterialCalendarView) findViewById((R.id.calendarView));
@@ -85,30 +85,34 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
 
         String[] param = makeDayForm();
 
-        //final String[][] result = new String[1][1];
-        String[] result = mMyAPI.get_achieved_days(param[0],param[1]);
-        //Call<PostItem> getCall = mMyAPI.get_achieved_days(param[0], param[1]);
-        /*
-        getCall.enqueue(new Callback<PostItem>() {
+        //데이터베이스 설정
+        Retrofit mRetrofit = new Retrofit.Builder()
+                .baseUrl("https://r89kbtj8x9.execute-api.us-east-1.amazonaws.com/last/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RainbowAPI mRetrofitAPI = mRetrofit.create(RainbowAPI.class);
+
+        Call<PostItemStringList> mCallMoviewList = mRetrofitAPI.getAchievementList(0,param[0],param[1]);
+        mCallMoviewList.enqueue(new Callback<PostItemStringList>() {
             @Override
-            public void onResponse(Call<PostItem> call, Response<PostItem> response) {
-                if (response.isSuccessful()) {
-                    PostItem mList = response.body();
-                    result[0] = mList.get_achievementList();
-                }
+            public void onResponse(Call<PostItemStringList> call, Response<PostItemStringList> response) {
+                PostItemStringList result = response.body();
+                new ApiSimulator(result.getTarget()).executeOnExecutor(Executors.newSingleThreadExecutor());
             }
             @Override
-            public void onFailure(Call<PostItem> call, Throwable t) {
+            public void onFailure(Call<PostItemStringList> call, Throwable t) {
+                t.printStackTrace();
             }
         });
 
-*/
+
         // 디비: dot 표시하지 않을 날짜 지정(목표를 달성하지 못한 날)
         //final DataBaseHelper DBHelper = new DataBaseHelper(this);
         // 달성하지 못한날을 string배열 형태로 불러옴
         //String[] result = DBHelper.getNotAchievedDays();
         //result에 있는 날들에 점 찍기
-        new ApiSimulator(result).executeOnExecutor(Executors.newSingleThreadExecutor());
+        //new ApiSimulator(result).executeOnExecutor(Executors.newSingleThreadExecutor());
+
 
         // 툴바 지정
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -208,12 +212,12 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
     }
 
     // 설정 눌렀을 때 시간 설정 페이지로 이동
-    public boolean onOptionsItemSelected(MenuItem item, @NonNull CalendarDay date) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_btn1:
                 Intent intent = new Intent(this, setting_time.class);
-                String today = makeDayForm()[1];
-                intent.putExtra("today", today);
+                String[] today = makeDayForm();
+                intent.putExtra("today", today[1]);
                 startActivity(intent);
                 return true;
             default:
@@ -269,13 +273,5 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         return arrtoday;
     }
 
-    private void initMyAPI(String baseUrl){
-//        String baseUrl = "https://r89kbtj8x9.execute-api.us-east-1.amazonaws.com/dev/";
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        mMyAPI= retrofit.create(RainbowAPI.class);
-    }
 
 }
