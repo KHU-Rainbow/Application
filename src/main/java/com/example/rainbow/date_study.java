@@ -60,7 +60,7 @@ public class date_study extends AppCompatActivity {
                         Color.parseColor("#fa5050"),
                         Color.parseColor("#faa850"),
                         Color.parseColor("#66ed5f"),
-                       Color.parseColor("#60b4f0"),
+                        Color.parseColor("#60b4f0"),
                         Color.parseColor("#c15df0"),
                 }, null, Shader.TileMode.MIRROR);
         tx1.getPaint().setShader(textShader1);
